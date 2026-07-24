@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" fill="none" role="img" aria-label="IntelAv">
+  <defs>
+    <linearGradient id="iaBg" x1="0" y1="0" x2="220" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B6EA5"/>
+      <stop offset="1" stop-color="#1E4A7A"/>
+    </linearGradient>
+  </defs>
+  <rect width="220" height="56" rx="12" fill="url(#iaBg)"/>
+  <text x="110" y="36" text-anchor="middle" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="0.5" fill="#FFFFFF">&#1048;&#1085;&#1090;&#1077;&#1083;&#1040;&#1074;</text>
+</svg>
