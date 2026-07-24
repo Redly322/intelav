@@ -450,7 +450,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 .section-lead {
   margin: 14px 0 0;
-  color: var(--muted);
+  color: var(--ink);
   max-width: 58ch;
 }
 
