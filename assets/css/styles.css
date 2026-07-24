@@ -526,6 +526,70 @@ body.nav-open .nav-toggle span:nth-child(3) {
   color: var(--ink);
 }
 
+.its-note {
+  margin: -8px 0 0 !important;
+  font-size: 0.92rem;
+  color: var(--muted) !important;
+}
+
+.its-prices {
+  display: grid;
+  gap: 22px;
+}
+
+.its-prices h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg-soft);
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.price-table th,
+.price-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--ink);
+}
+
+.price-table th {
+  background: rgba(74, 111, 150, 0.1);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.price-table tbody tr:last-child th,
+.price-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.price-table td:not(:first-child),
+.price-table.price-table-wide th:not(:first-child) {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.price-table-wide td:first-child {
+  min-width: 16rem;
+}
+
 .check-list {
   margin: 0;
   padding: 0;
@@ -668,6 +732,11 @@ body.nav-open .nav-toggle span:nth-child(3) {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+}
+
+.team-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 900px;
 }
 
 .team-member {
