@@ -70,8 +70,8 @@ textarea {
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, #e8eaed 0%, rgba(232, 234, 237, 0.92) 55%, rgba(232, 234, 237, 0.75) 100%),
-    url("../images/megapolis.jpg") center bottom / cover no-repeat;
+    linear-gradient(180deg, rgba(232, 234, 237, 0.88) 0%, rgba(232, 234, 237, 0.78) 45%, rgba(232, 234, 237, 0.55) 100%),
+    url("../images/megapolis.jpg") center / cover no-repeat;
 }
 
 .container {
@@ -286,8 +286,8 @@ body.nav-open .nav-toggle span:nth-child(3) {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, #e8eaed 0%, rgba(232, 234, 237, 0.55) 42%, rgba(232, 234, 237, 0.15) 100%),
-    url("../images/megapolis.jpg") center bottom / cover no-repeat;
+    linear-gradient(180deg, rgba(232, 234, 237, 0.35) 0%, rgba(232, 234, 237, 0.18) 40%, rgba(232, 234, 237, 0.55) 100%),
+    url("../images/megapolis.jpg") center / cover no-repeat;
 }
 
 .hero-grid {
@@ -297,7 +297,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 .hero-veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(232, 234, 237, 0.55) 0%, rgba(232, 234, 237, 0.12) 50%, rgba(232, 234, 237, 0.25) 100%);
+  background: linear-gradient(90deg, rgba(232, 234, 237, 0.42) 0%, rgba(232, 234, 237, 0.08) 48%, rgba(232, 234, 237, 0.18) 100%);
 }
 
 .hero-content {
