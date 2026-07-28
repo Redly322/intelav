@@ -650,7 +650,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 .its-services li {
   display: grid;
-  grid-template-columns: 40px 1fr;
+  grid-template-columns: 48px 1fr;
   gap: 12px;
   align-items: start;
   padding: 12px 14px;
@@ -673,24 +673,13 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .its-ico {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 10px;
   display: block;
+  object-fit: contain;
+  background: transparent;
 }
-
-.tone-violet { background: #7b5cff; }
-.tone-red { background: #e03535; }
-.tone-purple { background: #6b3fa0; }
-.tone-orange { background: #f0a020; }
-.tone-blue { background: #2f5fd0; }
-.tone-cyan { background: #20b8b0; }
-.tone-green { background: #2f9e5f; }
-.tone-navy { background: #1f3a6e; }
-.tone-teal { background: #178a8a; }
-.tone-magenta { background: #c23a8c; }
-.tone-brown { background: #8a5a3a; }
-.tone-lime { background: #6aa822; }
 
 .check-list {
   margin: 0;
