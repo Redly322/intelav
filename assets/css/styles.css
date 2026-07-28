@@ -612,6 +612,19 @@ body.nav-open .nav-toggle span:nth-child(3) {
   min-width: 12rem;
 }
 
+.price-table .price-col-head {
+  white-space: normal;
+  max-width: 16rem;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.price-table td:last-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+
 .its-header {
   display: flex;
   flex-wrap: wrap;
