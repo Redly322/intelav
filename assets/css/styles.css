@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #e8eaed;
   --bg-soft: #f3f4f6;
   --bg-elevated: #ffffff;
@@ -56,7 +56,7 @@ textarea {
   font: inherit;
 }
 
-/* «1С» — единый шрифт с кириллической С */
+/* В«1РЎВ» вЂ” РµРґРёРЅС‹Р№ С€СЂРёС„С‚ СЃ РєРёСЂРёР»Р»РёС‡РµСЃРєРѕР№ РЎ */
 .mark-1c {
   font-family: var(--font-1c);
   font-weight: 500;
@@ -526,11 +526,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
   color: var(--ink);
 }
 
-.its-note {
-  margin: 10px 0 0 !important;
-  font-size: 0.92rem;
-  color: var(--muted) !important;
-}
+.its-note {`n  margin: 10px 0 0 !important;`n  font-size: 0.92rem;`n  color: var(--muted) !important;`n}`n`n.its-note-nowrap {`n  white-space: nowrap;`n  overflow-x: auto;`n  display: block;`n}
 
 .service-kinds {
   display: grid;
@@ -1168,3 +1164,4 @@ body.nav-open .nav-toggle span:nth-child(3) {
     transform: none;
   }
 }
+
