@@ -609,8 +609,88 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .price-table-wide td:first-child {
-  min-width: 16rem;
+  min-width: 12rem;
 }
+
+.its-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 18px 24px;
+}
+
+.its-logo {
+  width: min(200px, 100%);
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.its-tariffs-link {
+  margin: 0;
+}
+
+.its-tariffs-link a {
+  color: var(--btn);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.its-services {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.its-services li {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+
+.its-services strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+.its-services p {
+  margin: 0 !important;
+  font-size: 0.88rem;
+  color: var(--ink) !important;
+  line-height: 1.4;
+}
+
+.its-ico {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: block;
+}
+
+.tone-violet { background: #7b5cff; }
+.tone-red { background: #e03535; }
+.tone-purple { background: #6b3fa0; }
+.tone-orange { background: #f0a020; }
+.tone-blue { background: #2f5fd0; }
+.tone-cyan { background: #20b8b0; }
+.tone-green { background: #2f9e5f; }
+.tone-navy { background: #1f3a6e; }
+.tone-teal { background: #178a8a; }
+.tone-magenta { background: #c23a8c; }
+.tone-brown { background: #8a5a3a; }
+.tone-lime { background: #6aa822; }
 
 .check-list {
   margin: 0;
@@ -687,11 +767,16 @@ body.nav-open .nav-toggle span:nth-child(3) {
   padding-bottom: 24px;
   border-bottom: 1px solid var(--line);
   border-radius: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .franchise-badge {
-  display: grid;
-  gap: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 20px;
   padding: 28px 30px;
   border-radius: var(--radius);
   background: var(--bg-elevated);
@@ -704,11 +789,12 @@ body.nav-open .nav-toggle span:nth-child(3) {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
 }
 
 .franchise-mark img,
 .franchise-logo {
-  width: min(220px, 100%);
+  width: min(160px, 100%);
   height: auto;
   flex-shrink: 0;
   border-radius: 0;
@@ -717,9 +803,11 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 .franchise-caption {
   margin: 0;
+  flex: 1 1 220px;
+  max-width: 36ch;
   font-size: 0.95rem;
   font-weight: 400;
-  color: var(--muted);
+  color: var(--ink);
   line-height: 1.5;
 }
 
@@ -987,7 +1075,8 @@ body.nav-open .nav-toggle span:nth-child(3) {
 @media (max-width: 960px) {
   .product-grid,
   .team-grid,
-  .contacts-grid {
+  .contacts-grid,
+  .its-services {
     grid-template-columns: 1fr;
   }
 
