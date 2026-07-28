@@ -891,6 +891,11 @@ body.nav-open .nav-toggle span:nth-child(3) {
     radial-gradient(circle at 45% 28%, #a8c0d8, #b4c0cc 52%, #d5dae0);
 }
 
+.team-photo-maria {
+  background-image: url("../images/team-maria.webp");
+  background-position: center 18%;
+}
+
 .team-member h3 {
   margin: 4px 0 0;
   font-size: 1.2rem;
