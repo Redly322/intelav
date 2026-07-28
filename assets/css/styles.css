@@ -527,7 +527,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .its-note {
-  margin: -8px 0 0 !important;
+  margin: 10px 0 0 !important;
   font-size: 0.92rem;
   color: var(--muted) !important;
 }
