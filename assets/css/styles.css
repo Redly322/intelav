@@ -903,6 +903,11 @@ body.nav-open .nav-toggle span:nth-child(3) {
   background-position: center 18%;
 }
 
+.team-photo-artur {
+  background-image: url("../images/team-artur.webp");
+  background-position: center 18%;
+}
+
 .team-photo-ramil {
   background-image: url("../images/team-ramil.jpg");
   background-position: center 18%;
