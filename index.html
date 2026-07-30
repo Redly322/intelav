@@ -27,17 +27,17 @@
       <nav class="site-nav" id="site-nav" aria-label="Основное меню">
         <ul class="nav-list">
           <li class="nav-item has-submenu">
-            <button type="button" class="nav-link" aria-expanded="false" aria-controls="submenu-products">
-              Продукты <span class="mark-1c">1С</span> <span class="chevron" aria-hidden="true"></span>
+            <button type="button" class="nav-link" aria-expanded="false" aria-controls="submenu-company">
+              О компании <span class="chevron" aria-hidden="true"></span>
             </button>
-            <ul class="submenu" id="submenu-products">
-              <li><a href="#product-buh"><span class="mark-1c">1С</span>:Бухгалтерия</a></li>
-              <li><a href="#product-zup"><span class="mark-1c">1С</span>:ЗУП</a></li>
-              <li><a href="#product-ut"><span class="mark-1c">1С</span>:Управление торговлей</a></li>
-              <li><a href="#product-ka"><span class="mark-1c">1С</span>:Комплексная автоматизация</a></li>
-              <li><a href="#product-erp"><span class="mark-1c">1С</span>:ERP</a></li>
-              <li><a href="#product-doc"><span class="mark-1c">1С</span>:Документооборот</a></li>
+            <ul class="submenu" id="submenu-company">
+              <li><a href="#about">О нас</a></li>
+              <li><a href="#team">Команда</a></li>
+              <li><a href="#contacts">Контакты</a></li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#projects">Проекты</a>
           </li>
           <li class="nav-item has-submenu">
             <button type="button" class="nav-link" aria-expanded="false" aria-controls="submenu-services">
@@ -48,17 +48,17 @@
               <li><a href="#service-its">ИТС</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#projects">Проекты</a>
-          </li>
           <li class="nav-item has-submenu">
-            <button type="button" class="nav-link" aria-expanded="false" aria-controls="submenu-company">
-              О компании <span class="chevron" aria-hidden="true"></span>
+            <button type="button" class="nav-link" aria-expanded="false" aria-controls="submenu-products">
+              Продукты <span class="mark-1c">1С</span> <span class="chevron" aria-hidden="true"></span>
             </button>
-            <ul class="submenu" id="submenu-company">
-              <li><a href="#about">О нас</a></li>
-              <li><a href="#team">Команда</a></li>
-              <li><a href="#contacts">Контакты</a></li>
+            <ul class="submenu" id="submenu-products">
+              <li><a href="#product-buh"><span class="mark-1c">1С</span>:Бухгалтерия</a></li>
+              <li><a href="#product-zup"><span class="mark-1c">1С</span>:ЗУП</a></li>
+              <li><a href="#product-ut"><span class="mark-1c">1С</span>:Управление торговлей</a></li>
+              <li><a href="#product-ka"><span class="mark-1c">1С</span>:Комплексная автоматизация</a></li>
+              <li><a href="#product-erp"><span class="mark-1c">1С</span>:ERP</a></li>
+              <li><a href="#product-doc"><span class="mark-1c">1С</span>:Документооборот</a></li>
             </ul>
           </li>
         </ul>
@@ -493,6 +493,12 @@
             <p>Прошёл обучение и успешно сдал экзамены <span class="mark-1c">1С</span>:Профессионал: <span class="mark-1c">1С</span>:Управление торговлей 11 и «<span class="mark-1c">1С</span>:Специалист-консультант» по внедрению прикладного решения «<span class="mark-1c">1С</span>:Управление торговлей 8».</p>
             <p><strong>Ключевые компетенции:</strong> создание и оптимизация отчётов, обработок и печатных форм; интеграция <span class="mark-1c">1С</span> с внешними системами через веб-сервисы; анализ требований и разработка технических решений; оптимизация производительности и поиск ошибок.</p>
           </article>
+          <article class="team-member reveal">
+            <div class="team-photo tone-c" role="img" aria-label="Фото Тимура Гаврилова"></div>
+            <h3>Тимур Гаврилов</h3>
+            <p class="team-role">Разработчик <span class="mark-1c">1С</span></p>
+            <p>ДОБАВИМ!!!!</p>
+          </article>
         </div>
       </div>
     </section>
@@ -534,8 +540,8 @@
               <input type="text" name="contact" required autocomplete="email" placeholder="+7 … или email" />
             </label>
             <label>
-              Задача
-              <textarea name="message" rows="4" placeholder="Коротко о продукте 1С и цели проекта"></textarea>
+              Комментарий
+              <textarea name="message" rows="4" placeholder="Напишите все что угодно"></textarea>
             </label>
             <button class="btn btn-primary" type="submit">Отправить заявку</button>
             <p class="form-note" id="form-note" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
