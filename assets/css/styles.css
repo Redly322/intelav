@@ -940,6 +940,11 @@ body.nav-open .nav-toggle span:nth-child(3) {
   background-position: center 22%;
 }
 
+.team-photo-timur {
+  background-image: url("../images/team-timur.jpg");
+  background-position: center 18%;
+}
+
 .team-member h3 {
   margin: 4px 0 0;
   font-size: 1.2rem;
