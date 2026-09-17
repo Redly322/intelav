@@ -945,6 +945,11 @@ body.nav-open .nav-toggle span:nth-child(3) {
   background-position: center 18%;
 }
 
+.team-photo-dmitry {
+  background-image: url("../images/team-dmitry.jpg");
+  background-position: center 20%;
+}
+
 .team-member h3 {
   margin: 4px 0 0;
   font-size: 1.2rem;
