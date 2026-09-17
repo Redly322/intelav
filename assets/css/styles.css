@@ -896,6 +896,15 @@ body.nav-open .nav-toggle span:nth-child(3) {
   color: var(--ink);
 }
 
+.cases-placeholder {
+  min-height: 220px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--line);
+  background:
+    linear-gradient(135deg, rgba(74, 111, 150, 0.06), transparent 55%),
+    var(--bg-elevated);
+}
+
 .team-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
