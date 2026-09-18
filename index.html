@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=44" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=45" />
   <link rel="icon" href="assets/images/logo-intelav.svg" type="image/svg+xml" />
 </head>
 <body>
@@ -661,7 +661,17 @@
 
         <div class="blog-subsection" id="blog-chestny-znak">
           <h3 class="blog-subhead reveal">Честный знак</h3>
-          <p class="blog-subsection-lead reveal">Материалы подраздела появятся здесь позже.</p>
+          <div class="blog-list">
+            <article class="blog-article reveal">
+              <h4 class="blog-article-title">Загрузка марок Честного знака из XML</h4>
+              <div class="blog-body">
+                <p>Нужно было вытянуть коды маркировки из XML — обычно это счёт-фактура или УПД, где марки лежат в таблице товаров. Обработку можно было написать руками: пройти известные теги и забрать значения. Так и делают, пока схема не меняется.</p>
+                <p>У Честного знака и в выгрузках ЭДО поля живут недолго. Сегодня код в одном узле, завтра в другом, после обновления формата — ещё на уровень глубже или под другим именем. Жёсткая привязка к конкретным тегам каждый раз ломается, и разработку приходится переписывать.</p>
+                <p>Поэтому пошли не через карту полей, а через содержимое. ИИ хорошо подходит, когда правило стабильное, а оболочка нет: код маркировки выглядит как КИЗ (01…) или SSCC (00…), его можно проверить по длине и алфавиту и не важно, в каком теге он лежит.</p>
+                <p>За короткое время собрали простую внешнюю обработку <span class="mark-1c">1С</span>. Она читает XML, берёт табличную часть документа и обходит текст на всех уровнях вложенности. Подходящие под валидацию ключи собираются без дублей и записываются в штрихкоды упаковок выбранного документа.</p>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
