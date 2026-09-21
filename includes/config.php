@@ -30,3 +30,18 @@ function mail_is_configured(array $config): bool
 {
     return !empty($config['smtp_host']) && !empty($config['mail_to']);
 }
+
+function db_driver(array $config): string
+{
+    $driver = strtolower((string) ($config['db_driver'] ?? 'sqlite'));
+
+    if ($driver !== 'mysql') {
+        return 'sqlite';
+    }
+
+    if (empty($config['db_host']) || empty($config['db_name']) || empty($config['db_user'])) {
+        return 'sqlite';
+    }
+
+    return 'mysql';
+}

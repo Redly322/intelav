@@ -22,8 +22,13 @@ git pull origin hosting
 
 1. Скопируйте `config.example.php` → `config.local.php`
 2. Укажите SMTP и почту получателя
-3. Убедитесь, что папка `data/` доступна для записи PHP
-4. Импортируйте статьи:
+3. Укажите MySQL на хостинге:
+   - `db_driver` = `mysql`
+   - `db_host` = `185.105.110.7`
+   - `db_port` = `3306`
+   - `db_name`, `db_user`, `db_pass` — из панели хостинга
+4. Проверьте подключение: `php scripts/test-db-connection.php`
+5. Импортируйте статьи:
 
 ```bash
 git show origin/main:index.html > _github_index.html

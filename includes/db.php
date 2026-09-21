@@ -13,18 +13,78 @@ function db(): PDO
     }
 
     $config = app_config();
-    $dbPath = $config['db_path'];
+    $driver = db_driver($config);
+
+    if ($driver === 'mysql') {
+        $pdo = create_mysql_connection($config);
+        init_mysql_schema($pdo);
+    } else {
+        $pdo = create_sqlite_connection($config);
+        init_sqlite_schema($pdo);
+    }
+
+    return $pdo;
+}
+
+function create_mysql_connection(array $config): PDO
+{
+    $host = (string) ($config['db_host'] ?? '');
+    $port = (int) ($config['db_port'] ?? 3306);
+    $name = (string) ($config['db_name'] ?? '');
+    $user = (string) ($config['db_user'] ?? '');
+    $pass = (string) ($config['db_pass'] ?? '');
+    $charset = (string) ($config['db_charset'] ?? 'utf8mb4');
+
+    if ($host === '' || $name === '' || $user === '') {
+        throw new RuntimeException('MySQL is not configured: set db_host, db_name and db_user in config.local.php');
+    }
+
+    $dsn = sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s', $host, $port, $name, $charset);
+
+    return new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $charset,
+    ]);
+}
+
+function create_sqlite_connection(array $config): PDO
+{
+    $dbPath = (string) ($config['db_path'] ?? '');
+    if ($dbPath === '') {
+        throw new RuntimeException('SQLite db_path is not configured.');
+    }
 
     $dir = dirname($dbPath);
     if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
         throw new RuntimeException('Unable to create database directory.');
     }
 
-    $pdo = new PDO('sqlite:' . $dbPath, null, null, [
+    return new PDO('sqlite:' . $dbPath, null, null, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
+}
 
+function init_mysql_schema(PDO $pdo): void
+{
+    $schemaPath = dirname(__DIR__) . '/database/schema.mysql.sql';
+    if (!is_file($schemaPath)) {
+        throw new RuntimeException('MySQL schema file not found.');
+    }
+
+    $sql = file_get_contents($schemaPath);
+    if ($sql === false) {
+        throw new RuntimeException('Unable to read MySQL schema file.');
+    }
+
+    foreach (split_sql_statements($sql) as $statement) {
+        $pdo->exec($statement);
+    }
+}
+
+function init_sqlite_schema(PDO $pdo): void
+{
     $pdo->exec(
         'CREATE TABLE IF NOT EXISTS feedback (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -62,7 +122,7 @@ function db(): PDO
         )'
     );
 
-    ensure_articles_category_column($pdo);
+    ensure_sqlite_articles_category_column($pdo);
 
     $pdo->exec(
         'CREATE TABLE IF NOT EXISTS article_replies (
@@ -80,25 +140,43 @@ function db(): PDO
         'CREATE INDEX IF NOT EXISTS idx_article_replies_article_id
          ON article_replies (article_id)'
     );
-
-    return $pdo;
 }
 
-function ensure_articles_category_column(PDO $pdo): void
+function ensure_sqlite_articles_category_column(PDO $pdo): void
 {
     $columns = $pdo->query('PRAGMA table_info(articles)')->fetchAll();
-    $hasCategory = false;
-
     foreach ($columns as $column) {
         if (($column['name'] ?? '') === 'category_id') {
-            $hasCategory = true;
-            break;
+            return;
         }
     }
 
-    if (!$hasCategory) {
-        $pdo->exec('ALTER TABLE articles ADD COLUMN category_id INTEGER REFERENCES article_categories(id)');
+    $pdo->exec('ALTER TABLE articles ADD COLUMN category_id INTEGER REFERENCES article_categories(id)');
+}
+
+function split_sql_statements(string $sql): array
+{
+    $statements = [];
+    $buffer = '';
+
+    foreach (preg_split('/\R/u', $sql) as $line) {
+        $trimmed = trim($line);
+        if ($trimmed === '' || str_starts_with($trimmed, '--')) {
+            continue;
+        }
+
+        $buffer .= $line . PHP_EOL;
+        if (str_ends_with(rtrim($line), ';')) {
+            $statements[] = trim($buffer);
+            $buffer = '';
+        }
     }
+
+    if (trim($buffer) !== '') {
+        $statements[] = trim($buffer);
+    }
+
+    return $statements;
 }
 
 function save_feedback(string $name, string $phone, ?string $email, string $message): array

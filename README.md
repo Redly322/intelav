@@ -26,7 +26,20 @@ Start-Process "C:\Users\Admin\Projects\1c-ai-landing\intelav-repo\index.html"
 3. Заявки сохраняются в SQLite: `data/feedback.db`
 4. API: `POST /api/feedback.php` с JSON `{ "name", "contact", "message" }`
 
-## Статьи (SQLite)
+## База данных
+
+- **Локально:** SQLite (`db_driver = sqlite`)
+- **На хостинге:** MySQL (`db_driver = mysql`, `185.105.110.7:3306`)
+
+Схема MySQL: `database/schema.mysql.sql`
+
+Проверка подключения:
+
+```powershell
+php scripts/test-db-connection.php
+```
+
+## Статьи
 
 Таблица `article_categories` — иерархия категорий:
 
