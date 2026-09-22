@@ -14,11 +14,12 @@ function render_page_start(string $title, string $description = ''): void
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title><?= $safeTitle ?></title>
   <meta name="description" content="<?= $safeDescription ?>" />
+  <base href="<?= htmlspecialchars(site_root(), ENT_QUOTES, 'UTF-8') ?>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/styles.css?v=56" />
-  <link rel="icon" href="assets/images/logo-intelav.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/styles.css?v=57'), ENT_QUOTES, 'UTF-8') ?>" />
+  <link rel="icon" href="<?= htmlspecialchars(asset_url('assets/images/logo-intelav.svg'), ENT_QUOTES, 'UTF-8') ?>" type="image/svg+xml" />
 </head>
 <body>
   <div class="page-glow" aria-hidden="true"></div>
@@ -29,11 +30,12 @@ function render_header(string $active = ''): void
 {
     require_once __DIR__ . '/categories.php';
     $blogTree = fetch_nav_category_tree();
+    $home = site_root();
     ?>
   <header class="site-header" id="top">
     <div class="header-inner">
-      <a class="brand" href="index.html" aria-label="ИнтелАв — на главную">
-        <img src="assets/images/logo-intelav.svg" alt="ИнтелАв" width="160" height="40" />
+      <a class="brand" href="<?= $home ?>" aria-label="ИнтелАв — на главную">
+        <img src="<?= htmlspecialchars(asset_url('assets/images/logo-intelav.svg'), ENT_QUOTES, 'UTF-8') ?>" alt="ИнтелАв" width="160" height="40" />
       </a>
 
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Открыть меню">
@@ -47,21 +49,21 @@ function render_header(string $active = ''): void
               О компании <span class="chevron" aria-hidden="true"></span>
             </button>
             <ul class="submenu" id="submenu-company">
-              <li><a href="index.html#about">О нас</a></li>
-              <li><a href="index.html#certificates">Сертификаты</a></li>
-              <li><a href="index.html#team">Команда</a></li>
-              <li><a href="index.html#contacts">Контакты</a></li>
+              <li><a href="<?= $home ?>#about">О нас</a></li>
+              <li><a href="<?= $home ?>#certificates">Сертификаты</a></li>
+              <li><a href="<?= $home ?>#team">Команда</a></li>
+              <li><a href="<?= $home ?>#contacts">Контакты</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.html#projects">Проекты</a>
+            <a class="nav-link" href="<?= $home ?>#projects">Проекты</a>
           </li>
           <li class="nav-item has-submenu">
             <button type="button" class="nav-link<?= $active === 'articles' ? ' is-active' : '' ?>" aria-expanded="false" aria-controls="submenu-blog">
               Блог <span class="chevron" aria-hidden="true"></span>
             </button>
             <ul class="submenu submenu-blog" id="submenu-blog">
-              <li><a href="articles">Все статьи</a></li>
+              <li><a href="<?= $home ?>articles">Все статьи</a></li>
               <?php foreach ($blogTree as $group): ?>
                 <li class="submenu-group-label" aria-hidden="true"><?= htmlspecialchars($group['title'], ENT_QUOTES, 'UTF-8') ?></li>
                 <?php foreach ($group['children'] as $category): ?>
@@ -79,8 +81,8 @@ function render_header(string $active = ''): void
               Услуги <span class="chevron" aria-hidden="true"></span>
             </button>
             <ul class="submenu" id="submenu-services">
-              <li><a href="index.html#service-pricing">Стоимость услуг</a></li>
-              <li><a href="index.html#service-its">ИТС</a></li>
+              <li><a href="<?= $home ?>#service-pricing">Стоимость услуг</a></li>
+              <li><a href="<?= $home ?>#service-its">ИТС</a></li>
             </ul>
           </li>
           <li class="nav-item has-submenu">
@@ -88,16 +90,16 @@ function render_header(string $active = ''): void
               Продукты <span class="mark-1c">1С</span> <span class="chevron" aria-hidden="true"></span>
             </button>
             <ul class="submenu" id="submenu-products">
-              <li><a href="index.html#product-buh"><span class="mark-1c">1С</span>:Бухгалтерия</a></li>
-              <li><a href="index.html#product-zup"><span class="mark-1c">1С</span>:ЗУП</a></li>
-              <li><a href="index.html#product-ut"><span class="mark-1c">1С</span>:Управление торговлей</a></li>
-              <li><a href="index.html#product-ka"><span class="mark-1c">1С</span>:Комплексная автоматизация</a></li>
-              <li><a href="index.html#product-erp"><span class="mark-1c">1С</span>:ERP</a></li>
-              <li><a href="index.html#product-doc"><span class="mark-1c">1С</span>:Документооборот</a></li>
+              <li><a href="<?= $home ?>#product-buh"><span class="mark-1c">1С</span>:Бухгалтерия</a></li>
+              <li><a href="<?= $home ?>#product-zup"><span class="mark-1c">1С</span>:ЗУП</a></li>
+              <li><a href="<?= $home ?>#product-ut"><span class="mark-1c">1С</span>:Управление торговлей</a></li>
+              <li><a href="<?= $home ?>#product-ka"><span class="mark-1c">1С</span>:Комплексная автоматизация</a></li>
+              <li><a href="<?= $home ?>#product-erp"><span class="mark-1c">1С</span>:ERP</a></li>
+              <li><a href="<?= $home ?>#product-doc"><span class="mark-1c">1С</span>:Документооборот</a></li>
             </ul>
           </li>
         </ul>
-        <a class="header-cta" href="index.html#contacts">Оставить заявку</a>
+        <a class="header-cta" href="<?= $home ?>#contacts">Оставить заявку</a>
       </nav>
     </div>
   </header>
@@ -109,17 +111,17 @@ function render_page_end(array $extraScripts = []): void
     ?>
   <footer class="site-footer">
     <div class="container footer-inner">
-      <a class="brand" href="index.html">
-        <img src="assets/images/logo-intelav.svg" alt="ИнтелАв" width="140" height="36" />
+      <a class="brand" href="<?= site_root() ?>">
+        <img src="<?= htmlspecialchars(asset_url('assets/images/logo-intelav.svg'), ENT_QUOTES, 'UTF-8') ?>" alt="ИнтелАв" width="140" height="36" />
       </a>
       <p>© <span id="year"></span> ИнтелАв. Комплексные решения для автоматизации на базе <span class="mark-1c">1С</span>.</p>
       <a href="#top" class="to-top" id="to-top">Наверх</a>
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=3"></script>
+  <script src="<?= htmlspecialchars(asset_url('assets/js/main.js?v=4'), ENT_QUOTES, 'UTF-8') ?>"></script>
 <?php foreach ($extraScripts as $script): ?>
-  <script src="<?= htmlspecialchars($script, ENT_QUOTES, 'UTF-8') ?>"></script>
+  <script src="<?= htmlspecialchars(asset_url($script), ENT_QUOTES, 'UTF-8') ?>"></script>
 <?php endforeach; ?>
 </body>
 </html>

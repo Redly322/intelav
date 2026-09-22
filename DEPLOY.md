@@ -17,10 +17,30 @@
 | FTP | `p668753.ispmgr.mchost.ru` |
 | Каталог сайта | `/www/` |
 | MySQL | `localhost:3306` (только с сервера) |
-| База | `p668753_p668753` |
+| База | `p668753_sqllite` |
 | phpMyAdmin | через панель хостинга |
+| Домен | `uchet.info` → каталог `/www/uchet.info/` |
 
 Пароли храните только в `config.local.php` на сервере, не в Git.
+
+### Включить PDO MySQL (обязательно)
+
+ISPmanager → **WWW** → **PHP** → **Расширения** → включить `pdo_mysql`.
+
+Проверка: `https://uchet.info/scripts/health.php` должно показать `PDO MySQL: yes`.
+
+### Ошибка 1044 (Access denied to database)
+
+Логин MySQL верный, но **имя базы** в `config.local.php` не совпадает с созданной в панели.
+
+1. ISPmanager → **Базы данных** → посмотрите точное имя БД
+2. ISPmanager → откройте БД → убедитесь, что пользователь `p668753_p668753` добавлен с полными правами
+3. Исправьте в `config.local.php`:
+   ```php
+   'db_name' => 'ТОЧНОЕ_ИМЯ_ИЗ_ПАНЕЛИ',
+   'db_user' => 'p668753_p668753',
+   ```
+4. Диагностика: `https://uchet.info/scripts/diagnose-mysql.php?key=setup-once`
 
 ## Обновление на PHP-хостинге
 
@@ -69,8 +89,24 @@ php scripts/import-github-articles.php
 | `/blog/...` | `/articles#...` |
 | `#blog-marketplace` на главной | `/articles#marketplace` (через JS) |
 
+## Админка
+
+После деплоя создайте первого администратора на сервере:
+
+```bash
+php scripts/create-admin.php admin your-password "Admin Name"
+```
+
+Вход: `https://uchet.info/admin/login.php`
+
 ## Локальный запуск
 
 ```powershell
 .\start-local.ps1
+```
+
+Первый админ локально:
+
+```powershell
+php scripts/create-admin.php admin your-password "Admin Name"
 ```

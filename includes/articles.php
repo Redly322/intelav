@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function article_url(string $link): string
 {
-    return 'article/' . rawurlencode($link);
+    return site_root() . 'article/' . rawurlencode($link);
 }
 
 function format_article_date(string $date): string
@@ -138,4 +138,42 @@ function insert_article(
     ]);
 
     return (int) $pdo->lastInsertId();
+}
+
+function update_article(
+    int $id,
+    string $link,
+    string $description,
+    string $author,
+    string $publishedAt,
+    string $text,
+    ?int $categoryId = null
+): void {
+    if (!preg_match('/^[a-z0-9-]+$/', $link)) {
+        throw new InvalidArgumentException('Article link must contain only lowercase letters, numbers and hyphens.');
+    }
+
+    $pdo = db();
+    $stmt = $pdo->prepare(
+        'UPDATE articles
+         SET link = :link, description = :description, author = :author,
+             published_at = :published_at, text = :text, category_id = :category_id
+         WHERE id = :id'
+    );
+    $stmt->execute([
+        ':id' => $id,
+        ':link' => $link,
+        ':description' => $description,
+        ':author' => $author,
+        ':published_at' => $publishedAt,
+        ':text' => $text,
+        ':category_id' => $categoryId,
+    ]);
+}
+
+function delete_article(int $id): void
+{
+    $pdo = db();
+    $stmt = $pdo->prepare('DELETE FROM articles WHERE id = :id');
+    $stmt->execute([':id' => $id]);
 }

@@ -31,6 +31,16 @@ function mail_is_configured(array $config): bool
     return !empty($config['smtp_host']) && !empty($config['mail_to']);
 }
 
+function site_root(): string
+{
+    return '/';
+}
+
+function asset_url(string $path): string
+{
+    return site_root() . ltrim($path, '/');
+}
+
 function db_driver(array $config): string
 {
     $driver = strtolower((string) ($config['db_driver'] ?? 'sqlite'));

@@ -91,6 +91,27 @@ php scripts/import-github-articles.php
 
 На хостинге положите весь проект в корень сайта и убедитесь, что папка `data/` доступна для записи PHP.
 
+## Админка
+
+URL: `/admin/` (логин через `/admin/login.php`).
+
+Возможности:
+- несколько администраторов (`admin_users`)
+- CRUD разделов и статей (текст — простое HTML-поле)
+- просмотр и удаление ответов под статьями (публикуются сразу)
+
+Первый администратор:
+
+```powershell
+php scripts/create-admin.php login password "Display Name"
+```
+
+На хостинге (SSH или через панель → терминал):
+
+```bash
+php scripts/create-admin.php login password "Display Name"
+```
+
 ## Структура
 
 | Раздел | Содержание |

@@ -7,7 +7,7 @@ require_once __DIR__ . '/articles.php';
 
 function category_url(string $slug): string
 {
-    return 'articles#' . rawurlencode($slug);
+    return site_root() . 'articles#' . rawurlencode($slug);
 }
 
 function insert_category(string $slug, string $title, ?int $parentId = null, int $sortOrder = 0): int
@@ -29,6 +29,66 @@ function insert_category(string $slug, string $title, ?int $parentId = null, int
     ]);
 
     return (int) $pdo->lastInsertId();
+}
+
+function fetch_category_by_id(int $id): ?array
+{
+    if ($id <= 0) {
+        return null;
+    }
+
+    $pdo = db();
+    $stmt = $pdo->prepare(
+        'SELECT id, slug, title, parent_id, sort_order
+         FROM article_categories
+         WHERE id = :id
+         LIMIT 1'
+    );
+    $stmt->execute([':id' => $id]);
+
+    $category = $stmt->fetch();
+    return $category ?: null;
+}
+
+function update_category(int $id, string $slug, string $title, ?int $parentId, int $sortOrder): void
+{
+    if (!preg_match('/^[a-z0-9-]+$/', $slug)) {
+        throw new InvalidArgumentException('Category slug must contain only lowercase letters, numbers and hyphens.');
+    }
+
+    $pdo = db();
+    $stmt = $pdo->prepare(
+        'UPDATE article_categories
+         SET slug = :slug, title = :title, parent_id = :parent_id, sort_order = :sort_order
+         WHERE id = :id'
+    );
+    $stmt->execute([
+        ':id' => $id,
+        ':slug' => $slug,
+        ':title' => $title,
+        ':parent_id' => $parentId,
+        ':sort_order' => $sortOrder,
+    ]);
+}
+
+function delete_category(int $id): void
+{
+    $pdo = db();
+
+    $childCount = $pdo->prepare('SELECT COUNT(*) FROM article_categories WHERE parent_id = :id');
+    $childCount->execute([':id' => $id]);
+    if ((int) $childCount->fetchColumn() > 0) {
+        throw new RuntimeException('Нельзя удалить раздел с подразделами.');
+    }
+
+    $articleCount = $pdo->prepare('SELECT COUNT(*) FROM articles WHERE category_id = :id');
+    $articleCount->execute([':id' => $id]);
+    if ((int) $articleCount->fetchColumn() > 0) {
+        throw new RuntimeException('Нельзя удалить раздел со статьями.');
+    }
+
+    $stmt = $pdo->prepare('DELETE FROM article_categories WHERE id = :id');
+    $stmt->execute([':id' => $id]);
 }
 
 function fetch_category_by_slug(string $slug): ?array

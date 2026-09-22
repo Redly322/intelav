@@ -94,6 +94,27 @@ function format_reply_datetime(string $datetime): string
     return date('d.m.Y H:i', $timestamp);
 }
 
+function fetch_all_replies_admin(): array
+{
+    $pdo = db();
+    $stmt = $pdo->query(
+        'SELECT r.id, r.article_id, r.name, r.email, r.message, r.created_at,
+                a.description AS article_title, a.link AS article_link
+         FROM article_replies r
+         INNER JOIN articles a ON a.id = r.article_id
+         ORDER BY r.id DESC'
+    );
+
+    return $stmt->fetchAll();
+}
+
+function delete_article_reply(int $id): void
+{
+    $pdo = db();
+    $stmt = $pdo->prepare('DELETE FROM article_replies WHERE id = :id');
+    $stmt->execute([':id' => $id]);
+}
+
 function public_reply_payload(array $reply): array
 {
     return [

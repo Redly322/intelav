@@ -4,7 +4,7 @@ $Root = Split-Path $PSScriptRoot -Parent
 $FtpHost = "p668753.ispmgr.mchost.ru"
 $FtpUser = "p668753"
 $FtpPass = $env:INTELAV_FTP_PASS
-$RemoteBase = "www"
+$RemoteBase = if ($env:INTELAV_FTP_REMOTE) { $env:INTELAV_FTP_REMOTE } else { "www/uchet.info" }
 
 if ([string]::IsNullOrWhiteSpace($FtpPass)) {
     Write-Host "Set INTELAV_FTP_PASS environment variable before deploy."
@@ -55,7 +55,7 @@ if (-not (Test-Path $localConfigPath)) {
 $configText = Get-Content $localConfigPath -Raw -Encoding UTF8
 $configText = $configText -replace "'db_host'\s*=>\s*'[^']*'", "'db_host' => 'localhost'"
 $serverConfigPath = Join-Path $env:TEMP "intelav-config.local.php"
-Set-Content $serverConfigPath $configText -Encoding UTF8
+[System.IO.File]::WriteAllText($serverConfigPath, $configText, (New-Object System.Text.UTF8Encoding $false))
 Upload-FtpFile -LocalPath $serverConfigPath -RemotePath "config.local.php"
 
 $githubIndex = Join-Path $Root "_github_index.html"

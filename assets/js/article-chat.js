@@ -44,7 +44,7 @@
 
   const loadReplies = async () => {
     try {
-      const response = await fetch(`api/article-reply.php?article_id=${articleId}`);
+      const response = await fetch(`/api/article-reply.php?article_id=${articleId}`);
       const result = await response.json().catch(() => null);
 
       if (!response.ok || !result?.ok) {
@@ -85,7 +85,7 @@
     }
 
     try {
-      const response = await fetch("api/article-reply.php", {
+      const response = await fetch("/api/article-reply.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

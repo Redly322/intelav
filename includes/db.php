@@ -41,11 +41,20 @@ function create_mysql_connection(array $config): PDO
 
     $dsn = sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s', $host, $port, $name, $charset);
 
-    return new PDO($dsn, $user, $pass, [
+    if (!extension_loaded('pdo_mysql')) {
+        throw new RuntimeException('PDO MySQL is not enabled on hosting. Enable pdo_mysql in ISPmanager → PHP → Расширения.');
+    }
+
+    $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES ' . $charset,
-    ]);
+    ];
+
+    if (defined('PDO::MYSQL_ATTR_INIT_COMMAND')) {
+        $options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES ' . $charset;
+    }
+
+    return new PDO($dsn, $user, $pass, $options);
 }
 
 function create_sqlite_connection(array $config): PDO
@@ -139,6 +148,16 @@ function init_sqlite_schema(PDO $pdo): void
     $pdo->exec(
         'CREATE INDEX IF NOT EXISTS idx_article_replies_article_id
          ON article_replies (article_id)'
+    );
+
+    $pdo->exec(
+        'CREATE TABLE IF NOT EXISTS admin_users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            login TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            name TEXT NOT NULL,
+            created_at TEXT NOT NULL DEFAULT (datetime(\'now\', \'localtime\'))
+        )'
     );
 }
 

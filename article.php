@@ -21,7 +21,7 @@ if ($article === null) {
         <div class="article-not-found reveal">
           <h1>Статья не найдена</h1>
           <p>Возможно, ссылка устарела или материал был удалён.</p>
-          <a class="btn btn-primary" href="articles">К списку статей</a>
+          <a class="btn btn-primary" href="<?= site_root() ?>articles">К списку статей</a>
         </div>
       </div>
     </section>
@@ -41,7 +41,7 @@ render_header('articles');
     <section class="section section-alt articles-page">
       <div class="container article-page">
         <nav class="article-breadcrumb" aria-label="Навигация по статьям">
-          <a href="articles">Статьи</a>
+          <a href="<?= site_root() ?>articles">Статьи</a>
           <?php foreach ($breadcrumb as $crumb): ?>
             <span aria-hidden="true">/</span>
             <a href="<?= htmlspecialchars(category_url($crumb['slug']), ENT_QUOTES, 'UTF-8') ?>">
@@ -99,4 +99,4 @@ render_header('articles');
     </section>
   </main>
 <?php
-render_page_end(['assets/js/article-chat.js?v=1']);
+render_page_end(['assets/js/article-chat.js?v=2']);

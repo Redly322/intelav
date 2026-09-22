@@ -15,7 +15,7 @@ return [
     'db_driver' => 'mysql',
     'db_host' => 'localhost',
     'db_port' => 3306,
-    'db_name' => 'p668753_p668753',
+    'db_name' => 'p668753_sqllite',
     'db_user' => 'p668753_p668753',
     'db_pass' => 'your-db-password',
     'db_charset' => 'utf8mb4',
