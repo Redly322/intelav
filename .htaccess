@@ -1,0 +1,32 @@
+RewriteEngine On
+RewriteBase /
+
+DirectoryIndex index.php index.html
+
+RewriteRule ^index\.html$ / [R=301,L]
+
+# Красивые URL → PHP-страницы
+RewriteRule ^articles/?$ articles.php [L]
+RewriteRule ^article/([a-z0-9-]+)/?$ article.php?link=$1 [L,QSA]
+
+# Редирект со старых прямых ссылок на .php
+RewriteCond %{THE_REQUEST} \s/+article\.php\?link=([a-z0-9-]+) [NC]
+RewriteRule ^ /article/%1? [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/+articles\.php[\s?] [NC]
+RewriteRule ^ /articles [R=301,L]
+
+# Старые URL блога
+RewriteRule ^blog/?$ /articles [R=301,L]
+RewriteRule ^blog/marketplace/?$ /articles#marketplace [R=301,L,NE]
+RewriteRule ^blog/nsi/?$ /articles#nsi [R=301,L,NE]
+RewriteRule ^blog/marking/?$ /articles#marking [R=301,L,NE]
+RewriteRule ^blog/sales/?$ /articles#sales [R=301,L,NE]
+RewriteRule ^blog/chestny-znak/?$ /articles#chestny-znak [R=301,L,NE]
+RewriteRule ^blog/management-accounting/?$ /articles#management-accounting [R=301,L,NE]
+RewriteRule ^blog/budgeting/?$ /articles#budgeting [R=301,L,NE]
+
+# Защита конфигурации
+<Files "config.local.php">
+    Require all denied
+</Files>

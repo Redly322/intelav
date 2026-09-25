@@ -1,0 +1,557 @@
+<?php
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/includes/categories.php';
+require_once __DIR__ . '/includes/layout.php';
+
+render_page_start(
+    'ИнтелАв — комплексные решения для автоматизации на базе 1С',
+    'ИнтелАв — 1С:Франчайзи. Внедрение, доработки и поддержка 1С:Бухгалтерия, ЗУП, ERP, Документооборот. ИТС и проекты полного цикла.'
+);
+render_header('home');
+?>
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-media" aria-hidden="true">
+        <div class="hero-skyline"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-veil"></div>
+      </div>
+      <div class="hero-content">
+        <p class="hero-brand">ИнтелАв</p>
+        <h1 class="hero-title">Комплексные решения для автоматизации на базе <span class="mark-1c">1С</span></h1>
+        <p class="hero-lead">Внедрение современных подходов и программ для учёта, управления и сопровождения бизнеса.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contacts">Обсудить задачу</a>
+          <a class="btn btn-ghost" href="#about">О компании</a>
+        </div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Листайте</span>
+        <i></i>
+      </div>
+    </section>
+
+    <!-- VALUE STRIP -->
+    <section class="value-strip reveal" aria-label="Ключевые направления">
+      <div class="container value-strip-inner">
+        <p>Повышаем прозрачность учёта и эффективность процессов на платформе <span class="mark-1c">1С</span>:Предприятие</p>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section" id="products">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Продукты <span class="mark-1c">1С</span></p>
+          <h2>Типовые решения под задачи бизнеса</h2>
+        </header>
+        <div class="product-grid">
+          <article class="product-block reveal" id="product-buh">
+            <h3><span class="mark-1c">1С</span>:Бухгалтерия</h3>
+            <p>Бухгалтерский и налоговый учёт, регламентированная отчётность, обмен с банками и ФНС. Настройка под учётную политику компании.</p>
+          </article>
+          <article class="product-block reveal" id="product-zup">
+            <h3><span class="mark-1c">1С</span>:ЗУП</h3>
+            <p>Кадровый учёт, расчёт зарплаты, отпускные, больничные и кадровый ЭДО. Автоматизация HR-процессов без ручных таблиц.</p>
+          </article>
+          <article class="product-block reveal" id="product-ut">
+            <h3><span class="mark-1c">1С</span>:Управление торговлей</h3>
+            <p>Продажи, закупки, склад и ценообразование. Управление торговыми процессами и аналитика по номенклатуре и клиентам.</p>
+          </article>
+          <article class="product-block reveal" id="product-ka">
+            <h3><span class="mark-1c">1С</span>:Комплексная автоматизация</h3>
+            <p>Единый контур торговли, производства, склада и финансов для среднего бизнеса без избыточной сложности ERP.</p>
+          </article>
+          <article class="product-block reveal" id="product-erp">
+            <h3><span class="mark-1c">1С</span>:ERP</h3>
+            <p>Комплексное управление предприятием: производство, склад, продажи, финансы. Доработки и интеграции под специфику компании.</p>
+          </article>
+          <article class="product-block reveal" id="product-doc">
+            <h3><span class="mark-1c">1С</span>:Документооборот</h3>
+            <p>Маршруты согласования, архив, контроль исполнения и единое пространство документов для команд и подразделений.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section section-alt" id="services">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Услуги</p>
+          <h2>Сопровождение и развитие системы</h2>
+        </header>
+
+        <article class="service-panel reveal" id="service-pricing">
+          <div class="service-panel-copy">
+            <h3>Стоимость наших услуг</h3>
+            <div class="service-kinds">
+              <div class="service-kind">
+                <h4>Типовые услуги</h4>
+                <p>Исправление ошибок, восстановление баз, доработки конфигураций, обучение пользователей «с нуля», сопровождение нетиповых баз, аудит учёта и настроек, миграции.</p>
+              </div>
+              <div class="service-kind">
+                <h4>Проектные услуги</h4>
+                <p>Полноценный проект внедрения с обследованием, ТЗ, этапами и запуском под процессы клиента.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="its-prices">
+            <div class="table-wrap">
+              <table class="price-table price-table-wide">
+                <thead>
+                  <tr>
+                    <th>Наименование специалиста</th>
+                    <th>Проектные работы</th>
+                    <th>Почасовые работы</th>
+                    <th>Аутстафф (загрузка от 2&nbsp;мес. 100%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Разработчик</td>
+                    <td>4&nbsp;000/час</td>
+                    <td>3&nbsp;000/час</td>
+                    <td>3&nbsp;000/час–5&nbsp;500/час</td>
+                  </tr>
+                  <tr>
+                    <td>Консультант</td>
+                    <td>4&nbsp;000/час</td>
+                    <td>3&nbsp;000/час</td>
+                    <td>3&nbsp;000/час–5&nbsp;500/час</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="its-note">Точная стоимость зависит от объёма, формата работ и уровня специалиста — рассчитаем в заявке.</p>
+          </div>
+
+          <a class="btn btn-primary" href="#contacts">Запросить стоимость</a>
+        </article>
+
+        <article class="service-panel reveal" id="service-its">
+          <div class="service-panel-copy its-header">
+            <img class="its-logo" src="assets/images/logo-1c-its.png" alt="1С:ИТС" width="220" height="72" />
+            <div>
+              <h3>ИТС</h3>
+              <p>ИТС — это комплексная поддержка, которую фирма «<span class="mark-1c">1С</span>» совместно с официальными партнёрами предоставляет пользователям программных продуктов «<span class="mark-1c">1С</span>:Предприятие». Договор позволяет получать официальную поддержку программ «<span class="mark-1c">1С</span>:Предприятие», использовать информационную систему <span class="mark-1c">1С</span>:ИТС — методические материалы, справочники по учёту, налогам, кадрам, ответы экспертов, сервисы и консультации фирмы «<span class="mark-1c">1С</span>».</p>
+              <p class="its-note">*услуги и сервисы зависят от тарифа</p>
+            </div>
+          </div>
+
+          <div class="its-prices">
+            <h4>Рекомендованные цены на ИТС в период льготного сопровождения на 12 месяцев по схеме 8+4</h4>
+            <div class="table-wrap">
+              <table class="price-table">
+                <thead>
+                  <tr>
+                    <th>Вид заключаемого договора</th>
+                    <th class="price-col-nowrap">Рекомендованная стоимость*</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>ИТС ПРОФ</td><td>38&nbsp;000&nbsp;руб.</td></tr>
+                  <tr><td>ИТС Бюджет ПРОФ</td><td>38&nbsp;000&nbsp;руб.</td></tr>
+                  <tr><td>ИТС Строительство</td><td>52&nbsp;552&nbsp;руб.</td></tr>
+                  <tr><td>ИТС Медицина</td><td>42&nbsp;008&nbsp;руб.</td></tr>
+                  <tr><td>ИТС Ритейл ПРОФ</td><td>42&nbsp;864&nbsp;руб.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="its-note">*Рекомендованная стоимость льготного договора <span class="mark-1c">1С</span>:ИТС на 12 месяцев по схеме 8+4</p>
+
+            <h4>Цены <span class="mark-1c">1С</span>:ИТС ПРОФ после окончания периода льготного сопровождения</h4>
+            <div class="table-wrap its-prof-after">
+              <table class="price-table price-table-wide">
+                <thead>
+                  <tr>
+                    <th>Стоимость</th>
+                    <th>1&nbsp;мес.</th>
+                    <th>3&nbsp;мес.</th>
+                    <th>6&nbsp;мес.</th>
+                    <th>12&nbsp;мес.</th>
+                    <th>24&nbsp;мес.*</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Рекомендованная цена</td>
+                    <td>9&nbsp;301&nbsp;руб.</td>
+                    <td>20&nbsp;104&nbsp;руб.</td>
+                    <td>36&nbsp;307&nbsp;руб.</td>
+                    <td>68&nbsp;400&nbsp;руб.</td>
+                    <td>—</td>
+                  </tr>
+                  <tr>
+                    <td>Льготная цена (при непрерывном продлении договора ИТС)</td>
+                    <td>7&nbsp;751&nbsp;руб.</td>
+                    <td>16&nbsp;755&nbsp;руб.</td>
+                    <td>30&nbsp;259&nbsp;руб.</td>
+                    <td>57&nbsp;000&nbsp;руб.</td>
+                    <td>102&nbsp;600&nbsp;руб.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4>Доступ к сервисам <span class="mark-1c">1С</span>:ИТС</h4>
+            <ul class="its-services">
+              <li>
+                <img class="its-ico" src="assets/images/its-services/kontragent.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>:Контрагент</strong>
+                  <p>Автоматическое заполнение реквизитов и проверка информации о контрагентах</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/otchetnost.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>-Отчётность</strong>
+                  <p>Подготовка и сдача регламентированной отчётности в контролирующие органы</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/edo.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>-ЭДО</strong>
+                  <p>Обмен юридически значимыми документами в электронном виде из программ <span class="mark-1c">1С</span></p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/its.png" alt="" width="48" height="48" />
+                <div>
+                  <strong>Информационная система <span class="mark-1c">1С</span>:ИТС</strong>
+                  <p>Справочники, консультации по законодательству, методики и инструкции</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/lectoriy.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>:Лекторий</strong>
+                  <p>Семинары по законодательству и его отражению в программах <span class="mark-1c">1С</span></p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/connect.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>-Коннект</strong>
+                  <p>Корпоративный чат и оперативная поддержка пользователей программ <span class="mark-1c">1С</span></p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/nomenklatura.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>:Номенклатура</strong>
+                  <p>Поиск, загрузка и актуализация карточек товаров и услуг</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/spark.png" alt="" width="48" height="48" />
+                <div>
+                  <strong>1СПАРК Риски</strong>
+                  <p>Оценка надёжности контрагентов и мониторинг изменений</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/sverka.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>:Сверка</strong>
+                  <p>Автоматическая сверка счетов-фактур с контрагентами</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/directbank.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>:ДиректБанк</strong>
+                  <p>Прямой обмен с банком из программы <span class="mark-1c">1С</span> без клиент-банка</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/cloud-archive.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>:Облачный архив</strong>
+                  <p>Резервное копирование информационных баз в облако</p>
+                </div>
+              </li>
+              <li>
+                <img class="its-ico" src="assets/images/its-services/business-learn.png" alt="" width="48" height="48" />
+                <div>
+                  <strong><span class="mark-1c">1С</span>:Бизнес-обучение</strong>
+                  <p>Обучение работе с программами <span class="mark-1c">1С</span> и развитию компетенций пользователей</p>
+                </div>
+              </li>
+            </ul>
+
+            <h4><span class="mark-1c">1С</span>:ИТС Техно</h4>
+            <div class="table-wrap">
+              <table class="price-table price-table-wide">
+                <thead>
+                  <tr>
+                    <th>Стоимость</th>
+                    <th>6&nbsp;мес.</th>
+                    <th>12&nbsp;мес.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Рекомендованная цена</td>
+                    <td>15&nbsp;334&nbsp;руб.</td>
+                    <td>29&nbsp;004&nbsp;руб.</td>
+                  </tr>
+                  <tr>
+                    <td>Льготная цена (при непрерывном продлении договора ИТС)</td>
+                    <td>12&nbsp;781&nbsp;руб.</td>
+                    <td>24&nbsp;168&nbsp;руб.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <a class="btn btn-primary" href="#contacts">Подключить ИТС</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Проекты</p>
+          <h2>Практика внедрений полного цикла</h2>
+          <p class="section-lead">От анализа процессов и проектирования до запуска, доработок и поддержки. Ниже — типовые сценарии наших проектов.</p>
+        </header>
+        <div class="project-list">
+          <article class="project-row reveal">
+            <h3>Внедрение 1С:ERP на производственном предприятии</h3>
+            <p>Единый контур производства, склада и финансов. Сокращение ручных операций и прозрачный управленческий учёт.</p>
+          </article>
+          <article class="project-row reveal">
+            <h3>Миграция с зарубежных систем на 1С</h3>
+            <p>Перенос процессов и данных, обучение пользователей, поэтапный запуск без остановки ключевых операций.</p>
+          </article>
+          <article class="project-row reveal">
+            <h3>Интеграции и нестандартные задачи</h3>
+            <p>Обмен с сайтами, ЭДО, отраслевыми сервисами и внутренними системами. Стабильная связка вместо разрозненных Excel.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section section-alt" id="about">
+      <div class="container about-layout">
+        <header class="section-head reveal">
+          <p class="eyebrow">О компании</p>
+          <h2>О нас</h2>
+        </header>
+
+        <div class="about-card reveal">
+          <div class="franchise-badge">
+            <div class="franchise-mark">
+              <img class="franchise-logo" src="assets/images/fran1c.png" alt="1С:Франчайзинг" width="200" height="133" />
+            </div>
+            <p class="franchise-caption">
+              ИнтелАв — партнёр сети «<span class="mark-1c">1С</span>:Франчайзинг».
+            </p>
+          </div>
+
+          <div class="about-prose">
+            <p class="lead-text">ИнтелАв — имеет статус «<span class="mark-1c">1С</span>:Франчайзинг».</p>
+            <p>Команда, которая более 10 лет разрабатывает комплексные решения для автоматизации бизнеса на платформе <span class="mark-1c">1С</span>.</p>
+            <p>Мы сопровождаем проекты полного цикла: от анализа процессов и проектирования до внедрения, доработок и поддержки. В работе опираемся на практику реальных внедрений и знание отраслевой специфики — от типовых конфигураций до сложных интеграций и нестандартных задач.</p>
+            <p>В штате — сертифицированные специалисты <span class="mark-1c">1С</span>: разработчики, консультанты и руководители проектов. Это позволяет держать качество под контролем на каждом этапе и отвечать за результат, а не только за отдельные задачи.</p>
+            <p>Наша цель — дать бизнесу устойчивую и понятную систему учёта и управления, которая работает стабильно и развивается вместе с компанией.</p>
+          </div>
+        </div>
+
+        <div class="certs-block" id="certificates">
+          <header class="section-head reveal">
+            <p class="eyebrow">О компании</p>
+            <h2>Сертификаты</h2>
+            <p class="section-lead">Партнёрские и франчайзинговые сертификаты ИнтелАв и ИП Вагапов. Нажмите, чтобы открыть полный PDF.</p>
+          </header>
+          <div class="certs-grid">
+            <a class="cert-card reveal" href="assets/certificates/partner-intelav.pdf" target="_blank" rel="noopener">
+              <img src="assets/images/certificates/partner-intelav.jpg" alt="ГК ИнтелАв — ИП Вагапов" width="420" height="594" loading="lazy" />
+              <span class="cert-caption">ГК ИнтелАв — ИП Вагапов</span>
+            </a>
+            <a class="cert-card reveal" href="assets/certificates/franchise-vagapov.pdf" target="_blank" rel="noopener">
+              <img src="assets/images/certificates/franchise-vagapov.jpg" alt="Сертификат 1С:Франчайзинг — ИП Вагапов" width="420" height="594" loading="lazy" />
+              <span class="cert-caption">Сертификат <span class="mark-1c">1С</span>:Франчайзинг — ИП Вагапов</span>
+            </a>
+            <a class="cert-card reveal" href="assets/certificates/franchise-intelav.pdf" target="_blank" rel="noopener">
+              <img src="assets/images/certificates/franchise-intelav.jpg" alt="Сертификат 1С:Франчайзинг — ИнтелАв" width="420" height="594" loading="lazy" />
+              <span class="cert-caption">Сертификат <span class="mark-1c">1С</span>:Франчайзинг — ИнтелАв</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="section" id="team">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">О компании</p>
+          <h2>Команда</h2>
+          <p class="section-lead">Сертифицированные специалисты <span class="mark-1c">1С</span> — продажи, внедрение и сопровождение проектов.</p>
+        </header>
+        <div class="team-grid">
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-artur" role="img" aria-label="Фото Артура Вагапова"></div>
+            <h3>Артур Вагапов</h3>
+            <p class="team-role">Генеральный директор компании</p>
+            <p>Более 20 лет опыта в области автоматизации предприятий. Имеет компетенции в разработке и управлении проектами, что подтверждается наличием сертификатов.</p>
+            <p>Под его руководством компания развивает направления внедрения, доработки и сопровождения конфигураций <span class="mark-1c">1С</span>.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-maria" role="img" aria-label="Фото Марии Калашниковой"></div>
+            <h3>Мария Калашникова</h3>
+            <p class="team-role">Руководитель отдела продаж</p>
+            <p>Более 12 лет в сфере автоматизации бизнеса. Специализируется на продаже и сопровождении проектов на базе <span class="mark-1c">1С</span> — от первого контакта до запуска решения у заказчика.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-anastasia" role="img" aria-label="Фото Анастасии Филипповой"></div>
+            <h3>Анастасия Филиппова</h3>
+            <p class="team-role">Консультант <span class="mark-1c">1С</span></p>
+            <p>Превращает задачи бизнеса в работающие решения на платформе <span class="mark-1c">1С</span>:Предприятие 8.3.</p>
+            <p>Проводит обследование процессов заказчика, выявляет узкие места, разрабатывает методологии учёта и регламентов работы в <span class="mark-1c">1С</span>, формирует технические задания для разработчиков.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-alexey" role="img" aria-label="Фото Алексея Кожевникова"></div>
+            <h3>Алексей Кожевников</h3>
+            <p class="team-role">Разработчик <span class="mark-1c">1С</span></p>
+            <p>Имеет большой опыт доработки конфигураций <span class="mark-1c">1С</span> и тестирования работоспособности.</p>
+            <p>Специализируется на конфигурациях <span class="mark-1c">1С</span>:Документооборот, <span class="mark-1c">1С</span>:Бухгалтерия, <span class="mark-1c">1С</span>:Комплексная автоматизация, <span class="mark-1c">1С</span>:Зарплата и управление персоналом.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-ilya" role="img" aria-label="Фото Ильи Захарова"></div>
+            <h3>Илья Захаров</h3>
+            <p class="team-role">Разработчик <span class="mark-1c">1С</span></p>
+            <p>Стаж разработки — более 5 лет.</p>
+            <p>Специалист по платформе <span class="mark-1c">1С</span>:Предприятие с опытом доработки типовых, нетиповых и самописных конфигураций.</p>
+            <p><strong>Ключевые компетенции:</strong> СКД и сложные запросы, внешние обработки и отчёты, доработки учёта, администрирование СУБД, анализ и сопровождение сложного кода в конфигурациях <span class="mark-1c">1С</span>:ERP, <span class="mark-1c">1С</span>:Управление торговлей, <span class="mark-1c">1С</span>:Зарплата и управление персоналом, <span class="mark-1c">1С</span>:Бухгалтерия, <span class="mark-1c">1С</span>:WMS.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-ramil" role="img" aria-label="Фото Рамиля Якубова"></div>
+            <h3>Рамиль Якубов</h3>
+            <p class="team-role">Разработчик <span class="mark-1c">1С</span></p>
+            <p>Опыт коммерческой разработки более 5 лет.</p>
+            <p>Специалист с уверенным владением платформой <span class="mark-1c">1С</span>:Предприятие и опытом работы с типовыми и самописными конфигурациями. Глубокое понимание подсистем бюджетирования, планирования и ценообразования, уверенное написание сложных запросов на языке запросов <span class="mark-1c">1С</span>.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-kamil" role="img" aria-label="Фото Камиля Невмянова"></div>
+            <h3>Камиль Невмянов</h3>
+            <p class="team-role">Разработчик <span class="mark-1c">1С</span></p>
+            <p>Сертифицированный специалист <span class="mark-1c">1С</span>:Предприятие с большим опытом сложной доработки типовых и самописных конфигураций.</p>
+            <p>Сильная сторона — сложная аналитика, интеграция, обмены. Большой опыт разработки по конфигурациям <span class="mark-1c">1С</span>:ERP, <span class="mark-1c">1С</span>:Документооборот, <span class="mark-1c">1С</span>:Бухгалтерия, <span class="mark-1c">1С</span>:Зарплата и управление персоналом различных редакций.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-ivan" role="img" aria-label="Фото Ивана Липатникова"></div>
+            <h3>Иван Липатников</h3>
+            <p class="team-role">Разработчик <span class="mark-1c">1С</span></p>
+            <p>Более 10 лет занимается разработкой и доработкой различных конфигураций <span class="mark-1c">1С</span>.</p>
+            <p>Прошёл обучение и успешно сдал экзамены <span class="mark-1c">1С</span>:Профессионал: <span class="mark-1c">1С</span>:Управление торговлей 11 и «<span class="mark-1c">1С</span>:Специалист-консультант» по внедрению прикладного решения «<span class="mark-1c">1С</span>:Управление торговлей 8».</p>
+            <p><strong>Ключевые компетенции:</strong> создание и оптимизация отчётов, обработок и печатных форм; интеграция <span class="mark-1c">1С</span> с внешними системами через веб-сервисы; анализ требований и разработка технических решений; оптимизация производительности и поиск ошибок.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-timur" role="img" aria-label="Фото Тимура Гаврилова"></div>
+            <h3>Тимур Гаврилов</h3>
+            <p class="team-role">Разработчик <span class="mark-1c">1С</span></p>
+            <p>Специалист <span class="mark-1c">1С</span>:Предприятие с опытом более 5 лет в автоматизации. Экспертиза по конфигурациям: <span class="mark-1c">1С</span>:ERP, <span class="mark-1c">1С</span>:УНФ, <span class="mark-1c">1С</span>:Документооборот, <span class="mark-1c">1С</span>:WMS.</p>
+            <p>Автоматизирует процессы e-commerce и выстраивает устойчивые интеграции <span class="mark-1c">1С</span> с маркетплейсами на базе API.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-andrey" role="img" aria-label="Фото Андрея Карташова"></div>
+            <h3>Андрей Карташов</h3>
+            <p class="team-role">Программист <span class="mark-1c">1С</span></p>
+            <p>Опыт разработки более 2 лет. Обладает экспертизой в автоматизации торговой деятельности, складского учета и оптимизации бизнес-процессов.</p>
+            <p>Сертифицированный специалист по «<span class="mark-1c">1С</span>:Профессионал» <span class="mark-1c">1С</span>:Документооборот.</p>
+            <p>Обладает уверенным пониманием внутренних механизмов работы платформы «<span class="mark-1c">1С</span>:Предприятие 8». Имеет успешный опыт как развития и поддержки нетиповых (самописных) конфигураций, так и адаптации типовых решений под специфику бизнеса. Владеет языком запросов, механизмом компоновки данных (СКД) и инструментами оптимизации производительности. Способен эффективно переводить требования бизнеса на технический язык и создавать отказоустойчивую архитектуру.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-dmitry" role="img" aria-label="Фото Дмитрия Ильина"></div>
+            <h3>Дмитрий Ильин</h3>
+            <p class="team-role">Программист <span class="mark-1c">1С</span></p>
+            <p>Более 2 лет занимается разработкой на платформе <span class="mark-1c">1С</span>:Предприятие 8.3. Уверенно работает с конфигурацией <span class="mark-1c">1С</span>:Управление торговлей, имеет сертификат «<span class="mark-1c">1С</span>:Профессионал» по технологическим вопросам.</p>
+            <p>Специализируется на доработке типовых и нетиповых конфигураций, написании сложных запросов, создании внешних отчётов и обработок, оптимизации кода и тестировании работоспособности решений. Быстро разбирается в задачах бизнеса и оперативно осваивает новые технологии.</p>
+          </article>
+          <article class="team-member reveal">
+            <div class="team-photo team-photo-nikita" role="img" aria-label="Фото Никиты Шигина"></div>
+            <h3>Никита Шигин</h3>
+            <p class="team-role">Тестировщик <span class="mark-1c">1С</span></p>
+            <p>С опытом работы более 2 лет. Специализируется на функциональном и нагрузочном тестировании самописных и типовых решений. Отвечает за финальную проверку конфигурации перед релизами, проектирует сценарии тестирования и выявляет технические или логические ошибки системы. Главная задача Никиты — гарантировать, что готовый продукт соответствует ТЗ и четко решает бизнес-задачи заказчика.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section class="section section-alt" id="blog">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">Практика</p>
+          <h2>Блог</h2>
+          <p class="section-lead">Материалы о наших доработках и решениях для клиентов.</p>
+        </header>
+        <div class="blog-preview reveal">
+          <p>Кейсы по маркетплейсам, маркировке, НСИ, продажам и управленческому учёту — в отдельном разделе.</p>
+          <a class="btn btn-primary" href="articles">Все статьи</a>
+        </div>
+      </div>
+    </section>
+    <!-- CONTACTS -->
+    <section class="section section-contacts" id="contacts">
+      <div class="container contacts-layout">
+        <header class="section-head reveal">
+          <p class="eyebrow">О компании</p>
+          <h2>Контакты</h2>
+          <p class="section-lead">Расскажите о задаче — вернёмся с коммерческим предложением</p>
+        </header>
+        <div class="contacts-grid">
+          <div class="contact-facts reveal">
+            <div>
+              <span>Компания</span>
+              <strong>ООО «ИнтелАв»</strong>
+            </div>
+            <div>
+              <span>Адрес</span>
+              <strong>город Москва, ул. Бачуринская, д.&nbsp;8А, с1</strong>
+            </div>
+            <div>
+              <span>Телефон</span>
+              <strong><a href="tel:+79161446944">+7&nbsp;916&nbsp;144&nbsp;69&nbsp;44</a></strong>
+            </div>
+            <div>
+              <span>Email</span>
+              <strong><a href="mailto:info@intelav.ru">info@intelav.ru</a></strong>
+            </div>
+          </div>
+          <form class="contact-form reveal" id="contact-form" action="api/feedback.php" method="post" novalidate>
+            <label>
+              Имя
+              <input type="text" name="name" required autocomplete="name" placeholder="Как к вам обращаться" />
+            </label>
+            <label>
+              Телефон или email
+              <input type="text" name="contact" required autocomplete="email" placeholder="+7 … или email" />
+            </label>
+            <label>
+              Комментарий
+              <textarea name="message" rows="4" placeholder="Напишите все что угодно"></textarea>
+            </label>
+            <button class="btn btn-primary" type="submit">Отправить заявку</button>
+            <p class="form-note" id="form-note" hidden>Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<?php
+render_page_end();

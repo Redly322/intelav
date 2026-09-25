@@ -1,0 +1,16 @@
+config.local.php
+data/*.db
+data/*.sqlite
+.env
+_github_index.html
+index.html.bak
+_live_blog/
+_site_sync.tgz
+_*.py
+*.zip
+*.epf
+*.erf
+*.xlsx
+_epf_*/
+_erf_*/
+src/

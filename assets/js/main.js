@@ -76,17 +76,79 @@
     revealItems.forEach((el) => el.classList.add("is-visible"));
   }
 
-  window.handleContactSubmit = (event) => {
-    event.preventDefault();
-    const note = document.getElementById("form-note");
-    const form = event.target;
-    if (note) note.hidden = false;
-    if (form instanceof HTMLFormElement) form.reset();
-    return false;
+  const contactForm = document.getElementById("contact-form");
+  const formNote = document.getElementById("form-note");
+  const submitButton = contactForm?.querySelector('button[type="submit"]');
+
+  const setFormNote = (text, isError = false) => {
+    if (!formNote) return;
+    formNote.textContent = text;
+    formNote.hidden = false;
+    formNote.classList.toggle("is-error", isError);
   };
+
+  contactForm?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const payload = {
+      name: String(formData.get("name") || "").trim(),
+      contact: String(formData.get("contact") || "").trim(),
+      message: String(formData.get("message") || "").trim(),
+    };
+
+    if (!payload.name || !payload.contact) {
+      setFormNote("Заполните имя и телефон или email.", true);
+      return;
+    }
+
+    if (submitButton instanceof HTMLButtonElement) {
+      submitButton.disabled = true;
+    }
+
+    try {
+      const response = await fetch("/api/feedback.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok || !result?.ok) {
+        setFormNote(result?.error || "Не удалось отправить заявку. Попробуйте позже.", true);
+        return;
+      }
+
+      setFormNote(result.message || "Спасибо! Мы свяжемся с вами в ближайшее время.");
+      contactForm.reset();
+    } catch (_error) {
+      setFormNote("Не удалось отправить заявку. Проверьте соединение и попробуйте снова.", true);
+    } finally {
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = false;
+      }
+    }
+  });
 
   document.getElementById("to-top")?.addEventListener("click", (event) => {
     event.preventDefault();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   });
+
+  const legacyBlogRedirects = {
+    blog: "articles",
+    "blog-marketplace": "articles#marketplace",
+    "blog-nsi": "articles#nsi",
+    "blog-marking": "articles#marking",
+    "blog-sales": "articles#sales",
+    "blog-chestny-znak": "articles#chestny-znak",
+    "blog-management-accounting": "articles#management-accounting",
+    "blog-budgeting": "articles#budgeting",
+  };
+
+  const legacyHash = window.location.hash.replace(/^#/, "");
+  if (legacyHash && legacyBlogRedirects[legacyHash]) {
+    window.location.replace(legacyBlogRedirects[legacyHash]);
+  }
 })();
