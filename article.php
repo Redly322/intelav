@@ -60,7 +60,7 @@ render_header('articles');
             <span><?= htmlspecialchars(format_article_date($article['published_at']), ENT_QUOTES, 'UTF-8') ?></span>
           </p>
           <div class="blog-body">
-            <?= $article['text'] ?>
+            <?= article_render_html((string) $article['text']) ?>
           </div>
           <?php if ($attachedImages !== []): ?>
             <div class="blog-attachments">

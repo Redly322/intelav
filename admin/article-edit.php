@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim((string) ($_POST['description'] ?? ''));
         $author = trim((string) ($_POST['author'] ?? ''));
         $publishedAt = trim((string) ($_POST['published_at'] ?? ''));
-        $text = (string) ($_POST['text'] ?? '');
+        $text = article_normalize_for_storage((string) ($_POST['text'] ?? ''));
         $linkInput = trim((string) ($_POST['link'] ?? ''));
         $link = $linkInput !== '' ? normalize_slug($linkInput) : normalize_slug($description);
         $categoryRaw = trim((string) ($_POST['category_id'] ?? ''));
@@ -137,13 +137,14 @@ admin_render_start($pageTitle, 'articles');
     </label>
 
     <label>
-      Текст (HTML)
-      <textarea id="article-text" name="text" rows="18"><?= htmlspecialchars((string) ($article['text'] ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea>
+      Текст
+      <textarea id="article-text" name="text" rows="18" placeholder="Пишите обычным текстом. Новый абзац — с новой строки. Список — строки, которые начинаются с - "><?= htmlspecialchars(article_edit_plain((string) ($article['text'] ?? '')), ENT_QUOTES, 'UTF-8') ?></textarea>
     </label>
+    <p class="admin-muted">HTML писать не нужно. Каждый абзац с новой строки. Чтобы сделать список, начните строку с «- ».</p>
 
     <div class="admin-images">
       <h2>Изображения</h2>
-      <p class="admin-muted">JPG, PNG, WEBP или GIF, до 10 МБ. Прикреплённые файлы появятся в статье. Чтобы поставить картинку в нужное место текста, нажмите «Вставить в текст».</p>
+      <p class="admin-muted">JPG, PNG, WEBP или GIF, до 10 МБ. Прикреплённые файлы появятся в статье. Чтобы поставить фото в нужное место, нажмите «Вставить в текст».</p>
 
       <?php if ($images !== []): ?>
         <div class="admin-image-grid">
@@ -203,33 +204,20 @@ admin_render_start($pageTitle, 'articles');
     return;
   }
 
-  const escapeHtml = (value) =>
-    String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;");
-
   document.querySelectorAll(".js-insert-image").forEach((button) => {
     button.addEventListener("click", () => {
       const src = button.getAttribute("data-src") || "";
-      const caption = button.getAttribute("data-caption") || "";
-      const alt = button.getAttribute("data-alt") || caption || "изображение";
-      const figure = [
-        '<figure class="blog-figure">',
-        `  <img src="${src}" alt="${escapeHtml(alt)}" loading="lazy" />`,
-        caption ? `  <figcaption>${escapeHtml(caption)}</figcaption>` : "",
-        "</figure>",
-      ].filter(Boolean).join("\n");
+      const caption = (button.getAttribute("data-caption") || "").replaceAll("[", "").replaceAll("]", "");
+      const marker = caption ? `[картинка: ${src} | ${caption}]` : `[картинка: ${src}]`;
 
       const start = textarea.selectionStart ?? textarea.value.length;
       const end = textarea.selectionEnd ?? start;
       const before = textarea.value.slice(0, start);
       const after = textarea.value.slice(end);
       const prefix = before && !before.endsWith("\n") ? "\n" : "";
-      textarea.value = before + prefix + figure + "\n" + after;
+      textarea.value = before + prefix + marker + "\n" + after;
       textarea.focus();
-      const cursor = (before + prefix + figure + "\n").length;
+      const cursor = (before + prefix + marker + "\n").length;
       textarea.setSelectionRange(cursor, cursor);
     });
   });
