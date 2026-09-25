@@ -1020,31 +1020,63 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .submenu-blog {
-  min-width: 320px;
-  max-height: min(72vh, calc(100vh - var(--header-h) - 20px));
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-.submenu-blog .submenu-group-label {
-  padding: 10px 16px 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--muted);
-  pointer-events: none;
+  min-width: 240px;
+  overflow: visible;
 }
 
 .submenu-blog .submenu-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   font-weight: 700;
 }
 
-.submenu-blog .submenu-article a {
-  padding-left: 28px;
-  font-size: 0.92em;
-  font-weight: 500;
+.submenu-flyout {
+  position: relative;
+}
+
+.submenu-flyout-chevron {
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  opacity: 0.55;
+  flex: 0 0 auto;
+}
+
+.submenu-panel {
+  position: absolute;
+  top: 0;
+  left: calc(100% - 2px);
+  min-width: 280px;
+  max-width: 360px;
+  max-height: min(72vh, calc(100vh - var(--header-h) - 20px));
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(8px);
+  transition: opacity 0.18s var(--ease), transform 0.18s var(--ease), visibility 0.18s;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  z-index: 2;
+}
+
+.submenu-flyout:hover > .submenu-panel,
+.submenu-flyout.is-open > .submenu-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
 .article-not-found,
@@ -1647,7 +1679,30 @@ body.nav-open .nav-toggle span:nth-child(3) {
   }
 
   .submenu-blog {
-    max-height: min(50vh, 420px);
+    max-height: none;
+  }
+
+  .submenu-panel {
+    position: static;
+    left: auto;
+    max-width: none;
+    max-height: none;
+    margin-top: 6px;
+    transform: none;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.72);
+    display: none;
+  }
+
+  .submenu-flyout:hover > .submenu-panel {
+    display: none;
+  }
+
+  .submenu-flyout.is-open > .submenu-panel {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .nav-list {

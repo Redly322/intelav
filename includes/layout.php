@@ -18,7 +18,7 @@ function render_page_start(string $title, string $description = ''): void
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/styles.css?v=60'), ENT_QUOTES, 'UTF-8') ?>" />
+  <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/styles.css?v=61'), ENT_QUOTES, 'UTF-8') ?>" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('assets/images/favicon.svg'), ENT_QUOTES, 'UTF-8') ?>" type="image/svg+xml" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('favicon.ico'), ENT_QUOTES, 'UTF-8') ?>" sizes="any" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('assets/images/favicon-32.png'), ENT_QUOTES, 'UTF-8') ?>" type="image/png" sizes="32x32" />
@@ -78,18 +78,29 @@ function render_header(string $active = ''): void
             <ul class="submenu submenu-blog" id="submenu-blog">
               <li><a href="<?= $home ?>articles">Все статьи</a></li>
               <?php foreach ($blogTree as $section): ?>
-                <li>
-                  <a class="submenu-section" href="<?= htmlspecialchars(category_url($section['slug']), ENT_QUOTES, 'UTF-8') ?>">
+                <?php $sectionUrl = category_url($section['slug']); ?>
+                <li class="submenu-flyout<?= $section['articles'] !== [] ? ' has-articles' : '' ?>">
+                  <a class="submenu-section" href="<?= htmlspecialchars($sectionUrl, ENT_QUOTES, 'UTF-8') ?>">
                     <?= htmlspecialchars($section['title'], ENT_QUOTES, 'UTF-8') ?>
+                    <?php if ($section['articles'] !== []): ?>
+                      <span class="submenu-flyout-chevron" aria-hidden="true"></span>
+                    <?php endif; ?>
                   </a>
+                  <?php if ($section['articles'] !== []): ?>
+                    <ul class="submenu-panel">
+                      <li>
+                        <a href="<?= htmlspecialchars($sectionUrl, ENT_QUOTES, 'UTF-8') ?>">Все статьи раздела</a>
+                      </li>
+                      <?php foreach ($section['articles'] as $navArticle): ?>
+                        <li>
+                          <a href="<?= htmlspecialchars(article_url($navArticle['link']), ENT_QUOTES, 'UTF-8') ?>">
+                            <?= htmlspecialchars(nav_article_title($navArticle['description']), ENT_QUOTES, 'UTF-8') ?>
+                          </a>
+                        </li>
+                      <?php endforeach; ?>
+                    </ul>
+                  <?php endif; ?>
                 </li>
-                <?php foreach ($section['articles'] as $navArticle): ?>
-                  <li class="submenu-article">
-                    <a href="<?= htmlspecialchars(article_url($navArticle['link']), ENT_QUOTES, 'UTF-8') ?>">
-                      <?= htmlspecialchars(nav_article_title($navArticle['description']), ENT_QUOTES, 'UTF-8') ?>
-                    </a>
-                  </li>
-                <?php endforeach; ?>
               <?php endforeach; ?>
             </ul>
           </li>
@@ -136,7 +147,7 @@ function render_page_end(array $extraScripts = []): void
     </div>
   </footer>
 
-  <script src="<?= htmlspecialchars(asset_url('assets/js/main.js?v=5'), ENT_QUOTES, 'UTF-8') ?>"></script>
+  <script src="<?= htmlspecialchars(asset_url('assets/js/main.js?v=6'), ENT_QUOTES, 'UTF-8') ?>"></script>
 <?php foreach ($extraScripts as $script): ?>
   <script src="<?= htmlspecialchars(asset_url($script), ENT_QUOTES, 'UTF-8') ?>"></script>
 <?php endforeach; ?>
