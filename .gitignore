@@ -1,6 +1,8 @@
 config.local.php
 data/*.db
 data/*.sqlite
+uploads/articles/**
+!uploads/articles/.gitkeep
 .env
 _github_index.html
 index.html.bak

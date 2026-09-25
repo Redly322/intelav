@@ -173,6 +173,9 @@ function update_article(
 
 function delete_article(int $id): void
 {
+    require_once __DIR__ . '/article_images.php';
+    delete_article_image_files($id);
+
     $pdo = db();
     $stmt = $pdo->prepare('DELETE FROM articles WHERE id = :id');
     $stmt->execute([':id' => $id]);

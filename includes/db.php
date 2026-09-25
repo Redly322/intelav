@@ -134,6 +134,24 @@ function init_sqlite_schema(PDO $pdo): void
     ensure_sqlite_articles_category_column($pdo);
 
     $pdo->exec(
+        'CREATE TABLE IF NOT EXISTS article_images (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            article_id INTEGER NOT NULL,
+            filename TEXT NOT NULL,
+            original_name TEXT NOT NULL,
+            caption TEXT NOT NULL DEFAULT \'\',
+            sort_order INTEGER NOT NULL DEFAULT 0,
+            created_at TEXT NOT NULL DEFAULT (datetime(\'now\', \'localtime\')),
+            FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
+        )'
+    );
+
+    $pdo->exec(
+        'CREATE INDEX IF NOT EXISTS idx_article_images_article_id
+         ON article_images (article_id)'
+    );
+
+    $pdo->exec(
         'CREATE TABLE IF NOT EXISTS article_replies (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             article_id INTEGER NOT NULL,

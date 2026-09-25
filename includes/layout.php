@@ -18,7 +18,7 @@ function render_page_start(string $title, string $description = ''): void
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/styles.css?v=61'), ENT_QUOTES, 'UTF-8') ?>" />
+  <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/styles.css?v=62'), ENT_QUOTES, 'UTF-8') ?>" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('assets/images/favicon.svg'), ENT_QUOTES, 'UTF-8') ?>" type="image/svg+xml" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('favicon.ico'), ENT_QUOTES, 'UTF-8') ?>" sizes="any" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('assets/images/favicon-32.png'), ENT_QUOTES, 'UTF-8') ?>" type="image/png" sizes="32x32" />

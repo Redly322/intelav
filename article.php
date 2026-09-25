@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/includes/articles.php';
+require_once __DIR__ . '/includes/article_images.php';
 require_once __DIR__ . '/includes/article_replies.php';
 require_once __DIR__ . '/includes/categories.php';
 require_once __DIR__ . '/includes/layout.php';
@@ -33,6 +34,8 @@ if ($article === null) {
 
 $pageTitle = $article['description'] . ' — ИнтелАв';
 $breadcrumb = fetch_category_breadcrumb($article['category_id']);
+$articleImages = fetch_article_images((int) $article['id']);
+$attachedImages = article_images_not_in_text($articleImages, (string) $article['text']);
 
 render_page_start($pageTitle, $article['description']);
 render_header('articles');
@@ -59,6 +62,13 @@ render_header('articles');
           <div class="blog-body">
             <?= $article['text'] ?>
           </div>
+          <?php if ($attachedImages !== []): ?>
+            <div class="blog-attachments">
+              <?php foreach ($attachedImages as $image): ?>
+                <?= article_image_figure_html($image) ?>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
         </article>
 
         <section
