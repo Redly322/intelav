@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Обучение команды 1С: оркестрация, MCP, skills</title>
+  <meta name="description" content="Перестраиваем отдел разработки 1С под оркестрацию агентов, MCP-серверы и пакет skills/rules. Ускоряем работу в 2–4 раза при сохранении контроля специалистов." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Наверх">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">
+        <span class="brand-line">1С × ИИ</span>
+        <span class="brand-sub">Обучение</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="#for-whom">Для кого</a>
+      <a href="#stack">Контур</a>
+      <a href="#deliver">Программа</a>
+      <a href="#process">Процесс</a>
+      <a href="#effect">Эффект</a>
+      <a href="#contact">Контакт</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="tel:+79161446944">Позвоните нам</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-plane" aria-hidden="true">
+        <div class="hero-wash"></div>
+        <div class="hero-beam hero-beam--a"></div>
+        <div class="hero-beam hero-beam--b"></div>
+        <svg class="hero-field" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#e08a45" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#e08a45" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <g class="field-rings" fill="none" stroke="rgba(224,138,69,0.22)" stroke-width="1.2">
+            <circle class="ring ring-1" cx="780" cy="340" r="90" />
+            <circle class="ring ring-2" cx="780" cy="340" r="170" />
+            <circle class="ring ring-3" cx="780" cy="340" r="270" />
+            <circle class="ring ring-4" cx="780" cy="340" r="380" />
+          </g>
+          <g class="field-paths" fill="none" stroke="rgba(247,250,248,0.14)" stroke-width="1.4">
+            <path class="path path-a" d="M180 520 C 340 480, 520 400, 780 340" />
+            <path class="path path-b" d="M220 620 C 420 560, 560 420, 780 340" />
+            <path class="path path-c" d="M140 400 C 360 360, 560 300, 780 340" />
+          </g>
+          <g class="field-nodes">
+            <circle class="node node-hub" cx="780" cy="340" r="10" fill="#e08a45" />
+            <circle class="node node-1" cx="180" cy="520" r="6" fill="rgba(247,250,248,0.75)" />
+            <circle class="node node-2" cx="220" cy="620" r="5" fill="rgba(247,250,248,0.55)" />
+            <circle class="node node-3" cx="140" cy="400" r="5" fill="rgba(247,250,248,0.55)" />
+            <circle class="node-pulse" cx="780" cy="340" r="28" fill="url(#nodeGlow)" />
+          </g>
+          <g class="field-travelers" fill="#e08a45">
+            <circle class="traveler t1" r="3.5">
+              <animateMotion dur="5.5s" repeatCount="indefinite" path="M180 520 C 340 480, 520 400, 780 340" />
+            </circle>
+            <circle class="traveler t2" r="3">
+              <animateMotion dur="7s" begin="1.2s" repeatCount="indefinite" path="M220 620 C 420 560, 560 420, 780 340" />
+            </circle>
+            <circle class="traveler t3" r="3">
+              <animateMotion dur="6.2s" begin="2.4s" repeatCount="indefinite" path="M140 400 C 360 360, 560 300, 780 340" />
+            </circle>
+          </g>
+        </svg>
+      </div>
+
+      <div class="hero-copy">
+        <p class="hero-kicker">Программа для отделов разработки 1С</p>
+        <p class="hero-brand">1С × ИИ · Обучение</p>
+        <h1 class="hero-title" id="hero-title">Научим команду управлять агентами — а не «спрашивать чат»</h1>
+        <p class="hero-lead">
+          Перестраиваем работу отдела: MCP под вашу конфигурацию, skills и rules для предсказуемого поведения моделей, сценарии от заявки до review. ИИ закрывает рутину подготовки; специалисты сохраняют архитектуру, расчёты и приёмку.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#contact">Обсудить программу</a>
+          <a class="btn btn-ghost" href="#stack">Как устроен контур</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section for-whom" id="for-whom" aria-labelledby="for-whom-title">
+      <div class="section-head">
+        <p class="eyebrow">Для кого</p>
+        <h2 id="for-whom-title">Своя команда 1С есть. Системной работы с ИИ — нет</h2>
+        <p class="section-lead">
+          Для компаний, где разработчики сильные, но процесс остался ручным: заявки идут в чат или «попробовали Copilot», без оркестрации, без MCP-контекста конфигурации и без общего пакета rules.
+        </p>
+      </div>
+      <ul class="signal-list">
+        <li>
+          <strong>ИИ используют точечно, без контура</strong>
+          <span>Каждый спрашивает модель по-своему. Нет skills под роли, нет единых rules, нет передачи задачи между агентами. Результат не воспроизводится от заявки к заявке.</span>
+        </li>
+        <li>
+          <strong>Модели не видят вашу конфигурацию</strong>
+          <span>Без MCP к метаданным и демо-базе агент угадывает структуру объектов. Появляются лишние итерации, а review съедает выигрыш по скорости.</span>
+        </li>
+        <li>
+          <strong>Нужен темп без найма и без потери контроля</strong>
+          <span>Оркестрация снимает рутину ТЗ, BSL-заготовок и тестов. Архитектор и ведущий разработчик остаются на решениях, где цена ошибки высока.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section stack" id="stack" aria-labelledby="stack-title">
+      <div class="section-head">
+        <p class="eyebrow">Контур</p>
+        <h2 id="stack-title">Связываем инструменты в один рабочий процесс</h2>
+        <p class="section-lead">
+          Мы не учим «пользоваться чатом». Собираем контур, где задача проходит по ролям до review: модель распределяет шаги, видит вашу конфигурацию и действует в рамках правил проекта.
+        </p>
+      </div>
+      <ol class="deliver-list">
+        <li>
+          <span class="deliver-num">01</span>
+          <div>
+            <h3>Оркестрация агентов</h3>
+            <p>Управляющая модель принимает постановку, дробит работу и назначает роли: анализ, код BSL, сбор контекста, тесты, подготовка к review. Порядок передачи результата фиксирован — как конвейер, а не переписка в мессенджере.</p>
+          </div>
+        </li>
+        <li>
+          <span class="deliver-num">02</span>
+          <div>
+            <h3>MCP под вашу конфигурацию</h3>
+            <p>Серверы отдают агентам метаданные, связи объектов и расширения из .cf / .cfe и демо-среды. Модель пишет в контексте реальной базы, а не по общим шаблонам «типовой УТ».</p>
+          </div>
+        </li>
+        <li>
+          <span class="deliver-num">03</span>
+          <div>
+            <h3>Skills — роли с зоной ответственности</h3>
+            <p>Отдельные навыки для постановки, разработки на встроенном языке, тест-кейсов и документации. У каждого — вход, выход и критерии готовности, без лишнего «творчества» там, где нужен регламент.</p>
+          </div>
+        </li>
+        <li>
+          <span class="deliver-num">04</span>
+          <div>
+            <h3>Rules — границы и приёмка</h3>
+            <p>Стандарты кода, запреты на опасные операции, чек-листы review и критерии промышленной приёмки. ИИ работает внутри ваших ограничений; финальное решение всегда за специалистом.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section deliver" id="deliver" aria-labelledby="deliver-title">
+      <div class="section-head">
+        <p class="eyebrow">Программа</p>
+        <h2 id="deliver-title">Что получаете вместе с обучением команды</h2>
+        <p class="section-lead">
+          Параллельно с практикой на ваших заявках поднимаем инфраструктуру и передаём пакет, которым отдел пользуется после нашего ухода.
+        </p>
+      </div>
+      <ul class="signal-list">
+        <li>
+          <strong>Переобучение на живых задачах</strong>
+          <span>Разработчики и аналитики проходят полный цикл: постановка → оркестратор → агенты → MCP-контекст → review → приёмка. Привычка формируется на реальных доработках, не на учебных примерах.</span>
+        </li>
+        <li>
+          <strong>Серверы и рантайм агентов</strong>
+          <span>Песочница, доступы, контур разработки и окружение, где крутятся MCP и агенты. Промышленная база остаётся изолированной до явного решения команды.</span>
+        </li>
+        <li>
+          <strong>Сценарии end-to-end</strong>
+          <span>Типовые маршруты: печатная форма, обработка, отчёт СКД, обмен, точечная доработка модуля. Для каждого сценария — кто запускает оркестрацию и где обязательный человеческий контроль.</span>
+        </li>
+        <li>
+          <strong>Пакет skills + rules</strong>
+          <span>Готовый набор ролей и ограничений под ваши стандарты 1С. Команда может расширять skills сама: новый skill — новая повторяемая операция без переписывания процесса с нуля.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section process" id="process" aria-labelledby="process-title">
+      <div class="section-head">
+        <p class="eyebrow">Процесс</p>
+        <h2 id="process-title">От аудита текущих заявок до автономной оркестрации</h2>
+        <p class="section-lead">
+          Сначала фиксируем, где ручной контур теряет время. Затем собираем MCP и пакет skills/rules. После — серия совместных задач, и только потом передача контура отделу.
+        </p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Аудит потока задач</h3>
+          <p>Разбираем заявки, ревью и релизы. Отмечаем этапы, которые безопасно отдать оркестрации, и этапы, где без архитектора нельзя.</p>
+        </li>
+        <li>
+          <h3>Сборка контура</h3>
+          <p>Поднимаем серверы, подключаем MCP к демо-конфигурации, пишем skills и rules, описываем handoff между агентами.</p>
+        </li>
+        <li>
+          <h3>Совместная практика</h3>
+          <p>Команда ведёт живые задачи в новом режиме. Мы корректируем постановки, смотрим качество BSL и жёсткость review.</p>
+        </li>
+        <li>
+          <h3>Передача и самостоятельность</h3>
+          <p>Оставляем регламент, пакет skills/rules и сценарии. Отдел ведёт контур дальше сам; при необходимости — точечная донастройка.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section effect" id="effect" aria-labelledby="effect-title">
+      <div class="section-head">
+        <p class="eyebrow">Эффект</p>
+        <h2 id="effect-title">Ускоряем отдел разработки в 2–4 раза</h2>
+        <p class="section-lead">
+          Когда MCP даёт контекст, skills закрывают типовые роли, а оркестратор убирает простой между шагами, сокращается время подготовки и доработок. Прибыль от разработки растёт пропорционально этому ускорению — при том же составе команды.
+        </p>
+      </div>
+      <div class="multipliers" aria-label="Множители ускорения">
+        <div class="multiplier">
+          <p class="multiplier-value">×2</p>
+          <p class="multiplier-label">после запуска контура: MCP + базовые skills и rules</p>
+        </div>
+        <div class="multiplier">
+          <p class="multiplier-value">×3</p>
+          <p class="multiplier-label">на потоке типовых заявок, когда оркестрация стала привычкой</p>
+        </div>
+        <div class="multiplier">
+          <p class="multiplier-value">×4</p>
+          <p class="multiplier-label">когда сценарии отработаны и review не тормозит handoff</p>
+        </div>
+      </div>
+      <p class="effect-note">
+        Ускорение не за счёт «слепого доверия» модели. За счёт того, что агенты работают в вашем MCP-контексте, а специалисты тратят время на решения, а не на черновую подготовку.
+      </p>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact-panel">
+        <p class="eyebrow">Контакт</p>
+        <h2 id="contact-title">Готовы перестроить работу отдела под ИИ</h2>
+        <p class="section-lead">
+          Разберём состав команды, конфигурации и текущий поток заявок. Покажем, какие MCP, skills и сценарии понадобятся для пилота. Условия и объём — в личном разговоре, без публичного прайса.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="tel:+79161446944">Позвоните нам</a>
+          <a class="btn btn-ghost" href="mailto:info@intelav.ru">Написать</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Официальный партнёр 1С</span>
+    <span>Москва</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
