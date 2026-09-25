@@ -131,6 +131,21 @@
     }
   });
 
+  document.querySelectorAll(".submenu-blog").forEach((menu) => {
+    menu.addEventListener(
+      "wheel",
+      (event) => {
+        if (menu.scrollHeight <= menu.clientHeight) {
+          return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        menu.scrollTop += event.deltaY;
+      },
+      { passive: false }
+    );
+  });
+
   document.getElementById("to-top")?.addEventListener("click", (event) => {
     event.preventDefault();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });

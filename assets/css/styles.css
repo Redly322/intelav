@@ -1019,6 +1019,14 @@ body.nav-open .nav-toggle span:nth-child(3) {
   font-weight: 600;
 }
 
+.submenu-blog {
+  min-width: 320px;
+  max-height: min(72vh, calc(100vh - var(--header-h) - 20px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
 .submenu-blog .submenu-group-label {
   padding: 10px 16px 4px;
   font-size: 0.78rem;
@@ -1633,6 +1641,13 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
   body.nav-open .site-nav {
     display: flex;
+    max-height: calc(100vh - var(--header-h));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .submenu-blog {
+    max-height: min(50vh, 420px);
   }
 
   .nav-list {
