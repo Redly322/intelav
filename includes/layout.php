@@ -12,13 +12,26 @@ function render_page_start(string $title, string $description = ''): void
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=113549871', 'ym');
+
+    ym(113549871, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/113549871" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
   <title><?= $safeTitle ?></title>
   <meta name="description" content="<?= $safeDescription ?>" />
   <base href="<?= htmlspecialchars(site_root(), ENT_QUOTES, 'UTF-8') ?>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/styles.css?v=62'), ENT_QUOTES, 'UTF-8') ?>" />
+  <link rel="stylesheet" href="<?= htmlspecialchars(asset_url('assets/css/styles.css?v=64'), ENT_QUOTES, 'UTF-8') ?>" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('assets/images/favicon.svg'), ENT_QUOTES, 'UTF-8') ?>" type="image/svg+xml" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('favicon.ico'), ENT_QUOTES, 'UTF-8') ?>" sizes="any" />
   <link rel="icon" href="<?= htmlspecialchars(asset_url('assets/images/favicon-32.png'), ENT_QUOTES, 'UTF-8') ?>" type="image/png" sizes="32x32" />
@@ -143,6 +156,7 @@ function render_page_end(array $extraScripts = []): void
         <img src="<?= htmlspecialchars(asset_url('assets/images/logo-intelav.svg'), ENT_QUOTES, 'UTF-8') ?>" alt="ИнтелАв" width="140" height="36" />
       </a>
       <p>© <span id="year"></span> ИнтелАв. Комплексные решения для автоматизации на базе <span class="mark-1c">1С</span>.</p>
+      <a href="mailto:info@intelav.ru">info@intelav.ru</a>
       <a href="#top" class="to-top" id="to-top">Наверх</a>
     </div>
   </footer>
