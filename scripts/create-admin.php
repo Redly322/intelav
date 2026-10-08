@@ -6,13 +6,9 @@ declare(strict_types=1);
  * CLI: php scripts/create-admin.php login password "Display Name"
  */
 
+require_once dirname(__DIR__) . '/includes/security.php';
+require_cli();
 require_once dirname(__DIR__) . '/includes/admin/users.php';
-
-if (PHP_SAPI !== 'cli') {
-    http_response_code(403);
-    echo "Run from CLI only.\n";
-    exit(1);
-}
 
 $login = $argv[1] ?? '';
 $password = $argv[2] ?? '';

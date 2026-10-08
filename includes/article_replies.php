@@ -16,11 +16,16 @@ function validate_article_reply_input(array $body): array
         return ['error' => 'Укажите статью.'];
     }
 
-    if ($name === '' || mb_strlen($name) > 100) {
+    if ($name === '' || mb_strlen($name) > 100 || strpbrk($name, "\r\n\0") !== false) {
         return ['error' => 'Укажите имя (до 100 символов).'];
     }
 
-    if ($email === '' || mb_strlen($email) > 120 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (
+        $email === ''
+        || mb_strlen($email) > 120
+        || strpbrk($email, "\r\n\0") !== false
+        || !filter_var($email, FILTER_VALIDATE_EMAIL)
+    ) {
         return ['error' => 'Укажите корректный email.'];
     }
 

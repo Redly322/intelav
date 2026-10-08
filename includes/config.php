@@ -55,3 +55,6 @@ function db_driver(array $config): string
 
     return 'mysql';
 }
+
+require_once __DIR__ . '/security.php';
+apply_security_headers();

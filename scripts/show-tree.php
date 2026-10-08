@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+require_once dirname(__DIR__) . '/includes/security.php';
+require_cli();
+
 require_once dirname(__DIR__) . '/includes/categories.php';
 
 foreach (fetch_category_tree() as $group) {

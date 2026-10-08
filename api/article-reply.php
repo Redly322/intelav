@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/includes/article_replies.php';
 require_once dirname(__DIR__) . '/includes/events.php';
+require_once dirname(__DIR__) . '/includes/rate_limit.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -41,6 +42,12 @@ $raw = file_get_contents('php://input') ?: '';
 $body = json_decode($raw, true);
 if (!is_array($body)) {
     $body = $_POST;
+}
+
+if (rate_limit_exceeded('article-reply', 8, 600)) {
+    http_response_code(429);
+    echo json_encode(['ok' => false, 'error' => 'Слишком много сообщений. Попробуйте позже.'], JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
 $data = validate_article_reply_input($body);

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+require_once dirname(__DIR__) . '/includes/security.php';
+require_cli();
+
 header('Content-Type: text/plain; charset=utf-8');
 
 echo 'PHP: ' . PHP_VERSION . PHP_EOL;

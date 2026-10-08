@@ -9,12 +9,10 @@ declare(strict_types=1);
 function on_article_reply_created(array $reply, array $article): void
 {
     error_log(sprintf(
-        '[article_reply] id=%d article_id=%d article=%s author=%s <%s>',
+        '[article_reply] id=%d article_id=%d article=%s',
         $reply['id'],
         $reply['article_id'],
-        $article['link'] ?? '',
-        $reply['name'],
-        $reply['email']
+        $article['link'] ?? ''
     ));
 }
 

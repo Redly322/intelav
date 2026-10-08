@@ -32,11 +32,17 @@ function send_feedback_email(array $feedback): bool
     $secure = (bool) ($config['smtp_secure'] ?? true);
     $user = (string) ($config['smtp_user'] ?? '');
     $pass = (string) ($config['smtp_pass'] ?? '');
-    $to = (string) $config['mail_to'];
-    $from = (string) ($config['mail_from'] ?: $user ?: $to);
-    $subject = 'Новая заявка с сайта: ' . $feedback['name'];
+    $to = str_replace(["\r", "\n", "\0"], '', (string) $config['mail_to']);
+    $from = str_replace(["\r", "\n", "\0"], '', (string) ($config['mail_from'] ?: $user ?: $to));
+    $subject = 'Новая заявка с сайта: ' . str_replace(["\r", "\n", "\0"], '', (string) $feedback['name']);
     $body = build_mail_text($feedback);
     $replyTo = $feedback['email'] ?: null;
+    if (is_string($replyTo)) {
+        $replyTo = str_replace(["\r", "\n", "\0"], '', $replyTo);
+        if ($replyTo === '' || !filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+            $replyTo = null;
+        }
+    }
 
     $transport = $secure ? 'ssl://' . $host : $host;
     $socket = @stream_socket_client(

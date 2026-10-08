@@ -7,9 +7,19 @@ require_once __DIR__ . '/users.php';
 
 function admin_session_start(): void
 {
-    if (session_status() !== PHP_SESSION_ACTIVE) {
-        session_start();
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        return;
     }
+
+    require_once dirname(__DIR__) . '/security.php';
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'secure' => request_is_https(),
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+    session_start();
 }
 
 function is_admin_logged_in(): bool

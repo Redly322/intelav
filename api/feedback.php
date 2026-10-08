@@ -6,6 +6,7 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/validation.php';
 require_once dirname(__DIR__) . '/includes/db.php';
 require_once dirname(__DIR__) . '/includes/mail.php';
+require_once dirname(__DIR__) . '/includes/rate_limit.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -24,6 +25,12 @@ $raw = file_get_contents('php://input') ?: '';
 $body = json_decode($raw, true);
 if (!is_array($body)) {
     $body = $_POST;
+}
+
+if (rate_limit_exceeded('feedback', 5, 600)) {
+    http_response_code(429);
+    echo json_encode(['ok' => false, 'error' => 'Слишком много заявок. Попробуйте позже.'], JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
 $data = validate_feedback_input($body);
@@ -61,5 +68,4 @@ http_response_code(201);
 echo json_encode([
     'ok' => true,
     'message' => 'Заявка отправлена. Мы свяжемся с вами в ближайшее время.',
-    'id' => $feedback['id'],
 ], JSON_UNESCAPED_UNICODE);

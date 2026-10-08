@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
+require_once dirname(__DIR__) . '/includes/security.php';
+require_cli();
+
 require_once dirname(__DIR__) . '/includes/db.php';
 require_once dirname(__DIR__) . '/includes/categories.php';
 
 header('Content-Type: text/plain; charset=utf-8');
-
-if (php_sapi_name() !== 'cli' && (($_GET['key'] ?? '') !== 'setup-once')) {
-    http_response_code(403);
-    echo "Forbidden. Run from CLI or add ?key=setup-once once, then remove this file.\n";
-    exit;
-}
 
 try {
     $pdo = db();

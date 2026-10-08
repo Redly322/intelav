@@ -27,7 +27,7 @@
 
 ISPmanager → **WWW** → **PHP** → **Расширения** → включить `pdo_mysql`.
 
-Проверка: `https://uchet.info/scripts/health.php` должно показать `PDO MySQL: yes`.
+Проверка с SSH: `php scripts/health.php` в каталоге сайта. Скрипты из браузера закрыты.
 
 ### Ошибка 1044 (Access denied to database)
 
@@ -40,7 +40,7 @@ ISPmanager → **WWW** → **PHP** → **Расширения** → включи
    'db_name' => 'ТОЧНОЕ_ИМЯ_ИЗ_ПАНЕЛИ',
    'db_user' => 'p668753_p668753',
    ```
-4. Диагностика: `https://uchet.info/scripts/diagnose-mysql.php?key=setup-once`
+4. Диагностика с SSH: `php scripts/diagnose-mysql.php`
 
 ## Обновление на PHP-хостинге
 
@@ -70,7 +70,7 @@ git pull origin hosting
    - `db_port` = `3306`
    - `db_name`, `db_user`, `db_pass` — из панели хостинга
 4. На сервере в `config.local.php` укажите `db_host = localhost`
-5. Откройте один раз: `/scripts/hosting-setup.php?key=setup-once`
+5. На сервере по SSH: `php scripts/hosting-setup.php`
 6. Или импортируйте статьи вручную:
 
 ```bash
