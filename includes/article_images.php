@@ -123,9 +123,46 @@ function delete_article_image(int $imageId, int $articleId): void
         ':article_id' => $articleId,
     ]);
 
+    strip_article_image_markers($articleId, $image['filename'], $image['url']);
+
     if (is_file($image['path'])) {
         unlink($image['path']);
     }
+}
+
+function strip_article_image_markers(int $articleId, string $filename, string $url = ''): void
+{
+    $stmt = db()->prepare('SELECT text FROM articles WHERE id = :id');
+    $stmt->execute([':id' => $articleId]);
+    $text = (string) $stmt->fetchColumn();
+    if ($text === '') {
+        return;
+    }
+
+    $needles = array_values(array_unique(array_filter([
+        $filename,
+        rawurlencode($filename),
+        $url,
+    ])));
+
+    $next = $text;
+    foreach ($needles as $needle) {
+        $next = preg_replace(
+            '/\[картинка:\s*[^\]]*?' . preg_quote($needle, '/') . '[^\]]*\]\s*/u',
+            '',
+            $next
+        ) ?? $next;
+    }
+
+    if ($next === $text) {
+        return;
+    }
+
+    $update = db()->prepare('UPDATE articles SET text = :text WHERE id = :id');
+    $update->execute([
+        ':text' => trim($next),
+        ':id' => $articleId,
+    ]);
 }
 
 function delete_article_image_files(int $articleId): void
@@ -153,30 +190,6 @@ function delete_article_image_files(int $articleId): void
     @rmdir($dir);
 }
 
-function store_uploaded_article_images(int $articleId, array $fileBag): array
-{
-    $uploaded = 0;
-    $errors = [];
-
-    foreach (normalize_uploaded_files($fileBag) as $file) {
-        if ((int) ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
-            continue;
-        }
-
-        try {
-            store_one_article_image($articleId, $file);
-            $uploaded++;
-        } catch (Throwable $e) {
-            $errors[] = $e->getMessage();
-        }
-    }
-
-    return [
-        'uploaded' => $uploaded,
-        'errors' => $errors,
-    ];
-}
-
 function normalize_uploaded_files(array $fileBag): array
 {
     if ($fileBag === [] || !isset($fileBag['name'])) {
@@ -199,6 +212,44 @@ function normalize_uploaded_files(array $fileBag): array
     }
 
     return $files;
+}
+
+function store_uploaded_article_images(int $articleId, array $fileBag): array
+{
+    $uploaded = 0;
+    $errors = [];
+    $files = normalize_uploaded_files($fileBag);
+
+    if (count($files) > 1) {
+        $rejected = 0;
+        foreach ($files as $file) {
+            $error = (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE);
+            if ($error === UPLOAD_ERR_NO_FILE) {
+                $rejected++;
+            }
+        }
+        if ($rejected > 0 && $rejected === count($files) - 1) {
+            $errors[] = 'Сервер принял только один файл. Добавьте остальные ещё раз и сохраните статью.';
+        }
+    }
+
+    foreach ($files as $file) {
+        if ((int) ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+            continue;
+        }
+
+        try {
+            store_one_article_image($articleId, $file);
+            $uploaded++;
+        } catch (Throwable $e) {
+            $errors[] = $e->getMessage();
+        }
+    }
+
+    return [
+        'uploaded' => $uploaded,
+        'errors' => $errors,
+    ];
 }
 
 function store_one_article_image(int $articleId, array $file): void

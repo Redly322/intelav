@@ -78,6 +78,7 @@ function render_header(string $active = ''): void
             <ul class="submenu submenu-blog" id="submenu-blog">
               <li><a href="<?= $home ?>articles">Все статьи</a></li>
               <?php foreach ($blogTree as $section): ?>
+                <?php if ($section['articles'] === []) { continue; } ?>
                 <?php $sectionUrl = category_url($section['slug']); ?>
                 <li class="submenu-flyout<?= $section['articles'] !== [] ? ' has-articles' : '' ?>">
                   <a class="submenu-section" href="<?= htmlspecialchars($sectionUrl, ENT_QUOTES, 'UTF-8') ?>">

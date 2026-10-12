@@ -27,20 +27,18 @@ render_header('articles');
         <?php else: ?>
           <div class="articles-tree">
             <?php foreach ($tree as $section): ?>
+              <?php if ($section['articles'] === []): ?>
+                <?php continue; ?>
+              <?php endif; ?>
               <section class="articles-tree-group reveal" id="<?= htmlspecialchars($section['slug'], ENT_QUOTES, 'UTF-8') ?>">
                 <header class="articles-tree-group-head">
                   <h2><?= htmlspecialchars($section['title'], ENT_QUOTES, 'UTF-8') ?></h2>
                 </header>
-
-                <?php if ($section['articles'] === []): ?>
-                  <p class="articles-tree-empty">В этом разделе пока нет статей.</p>
-                <?php else: ?>
-                  <div class="articles-grid">
-                    <?php foreach ($section['articles'] as $article): ?>
-                      <?php require __DIR__ . '/includes/partials/article-card.php'; ?>
-                    <?php endforeach; ?>
-                  </div>
-                <?php endif; ?>
+                <div class="articles-grid">
+                  <?php foreach ($section['articles'] as $article): ?>
+                    <?php require __DIR__ . '/includes/partials/article-card.php'; ?>
+                  <?php endforeach; ?>
+                </div>
               </section>
             <?php endforeach; ?>
           </div>

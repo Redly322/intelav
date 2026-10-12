@@ -22,4 +22,8 @@ return [
     'db_user' => 'intelav_user',
     'db_pass' => 'your-db-password',
     'db_charset' => 'utf8mb4',
+
+    // Каталог бэкапов. Пусто — вне веб-корня хостинга, иначе data/backups/
+    'backup_dir' => '',
+    'backup_keep_days' => 30,
 ];

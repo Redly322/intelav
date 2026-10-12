@@ -1275,14 +1275,28 @@ body.nav-open .nav-toggle span:nth-child(3) {
   font-size: 1.05rem;
 }
 
+.blog-body .table-wrap {
+  margin: 0 0 18px;
+}
+
+.blog-table th,
+.blog-table td {
+  white-space: normal;
+}
+
 .blog-body p:last-child {
   margin-bottom: 0;
 }
 
+.blog-body h3,
 .blog-body h4,
 .blog-body h5 {
   margin: 22px 0 10px;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.blog-body strong {
   font-weight: 700;
 }
 

@@ -1,6 +1,8 @@
 config.local.php
 data/*.db
 data/*.sqlite
+data/backups/*.sql.gz
+data/backups/*.sqlite.gz
 uploads/articles/**
 !uploads/articles/.gitkeep
 .env

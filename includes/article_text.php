@@ -29,9 +29,21 @@ function article_normalize_for_storage(string $text): string
 
 function article_render_html(string $text): string
 {
-    $plain = article_looks_like_html($text) ? article_html_to_plain($text) : $text;
+    if (article_looks_like_html($text)) {
+        return article_sanitize_stored_html($text);
+    }
 
-    return article_plain_to_html($plain);
+    return article_plain_to_html($text);
+}
+
+function article_sanitize_stored_html(string $html): string
+{
+    $html = preg_replace('#<(script|iframe|object|embed|form)(\s[^>]*)?>.*?</\1>#is', '', $html) ?? $html;
+    $html = preg_replace('#<(script|iframe|object|embed|form|link|meta)\b[^>]*/?>#is', '', $html) ?? $html;
+    $html = preg_replace('/\son[a-z]+\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/i', '', $html) ?? $html;
+    $html = preg_replace('/\s(href|src|xlink:href)\s*=\s*(["\'])\s*(javascript|data|vbscript):/i', ' $1=$2#blocked:', $html) ?? $html;
+
+    return $html;
 }
 
 function article_excerpt(string $text, int $limit = 220): string

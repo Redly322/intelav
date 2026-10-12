@@ -89,6 +89,32 @@ php scripts/import-github-articles.php
 | `/blog/...` | `/articles#...` |
 | `#blog-marketplace` на главной | `/articles#marketplace` (через JS) |
 
+## Бэкапы базы
+
+Каждую ночь (03:20) PHP снимает gzip-дамп MySQL. Файлы пишутся **вне сайта**: `/var/www/p668753/data/backup/uchet.info/`. Если туда нельзя писать — в `data/backups/` (каталог закрыт из веба). Хранятся 30 дней.
+
+Первый запуск и установка cron по SSH:
+
+```bash
+cd /var/www/p668753/data/www/uchet.info
+php scripts/backup-db.php
+php scripts/backup-db.php install-cron
+```
+
+В панели ISPmanager: **Планировщик cron** → команда:
+
+```text
+php /var/www/p668753/data/www/uchet.info/scripts/backup-db.php
+```
+
+расписание `20 3 * * *`.
+
+Восстановление:
+
+```bash
+php scripts/restore-db.php /var/www/p668753/data/backup/uchet.info/uchet-YYYYMMDD-HHMMSS.sql.gz
+```
+
 ## Админка
 
 После деплоя создайте первого администратора на сервере:

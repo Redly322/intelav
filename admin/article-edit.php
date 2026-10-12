@@ -138,13 +138,18 @@ admin_render_start($pageTitle, 'articles');
 
     <label>
       Текст
-      <textarea id="article-text" name="text" rows="18" placeholder="Пишите обычным текстом. Новый абзац — с новой строки. Список — строки, которые начинаются с - "><?= htmlspecialchars(article_edit_plain((string) ($article['text'] ?? '')), ENT_QUOTES, 'UTF-8') ?></textarea>
+      <textarea id="article-text" name="text" rows="18" placeholder="Пишите обычным текстом. Жирный — **фраза**. Заголовок раздела — строка ## Заголовок. Список — строки с - . Таблица — | ячейка | ячейка |"><?= htmlspecialchars(article_edit_plain((string) ($article['text'] ?? '')), ENT_QUOTES, 'UTF-8') ?></textarea>
     </label>
-    <p class="admin-muted">HTML писать не нужно. Каждый абзац с новой строки. Чтобы сделать список, начните строку с «- ».</p>
+    <p class="admin-muted">HTML писать не нужно. Выделите фразу и нажмите «Жирный». Заголовок раздела — кнопка «Заголовок» или строка, которая начинается с «## ». Список — «- ». Таблицу можно вставить кнопкой или скопировать из Excel.</p>
+    <div class="admin-actions" style="margin-top:-8px">
+      <button type="button" class="btn btn-secondary" id="format-bold">Жирный</button>
+      <button type="button" class="btn btn-secondary" id="format-heading">Заголовок</button>
+      <button type="button" class="btn btn-secondary" id="insert-table">Вставить таблицу</button>
+    </div>
 
     <div class="admin-images">
       <h2>Изображения</h2>
-      <p class="admin-muted">JPG, PNG, WEBP или GIF, до 10 МБ. Прикреплённые файлы появятся в статье. Чтобы поставить фото в нужное место, нажмите «Вставить в текст».</p>
+      <p class="admin-muted">JPG, PNG, WEBP или GIF, до 10 МБ каждый. Можно прикрепить несколько файлов сразу или добавлять ещё кнопкой ниже. Чтобы поставить фото в нужное место, нажмите «Вставить в текст».</p>
 
       <?php if ($images !== []): ?>
         <div class="admin-image-grid">
@@ -165,7 +170,7 @@ admin_render_start($pageTitle, 'articles');
                   data-caption="<?= htmlspecialchars($image['caption'], ENT_QUOTES, 'UTF-8') ?>"
                   data-alt="<?= htmlspecialchars($image['caption'] !== '' ? $image['caption'] : $image['original_name'], ENT_QUOTES, 'UTF-8') ?>"
                 >Вставить в текст</button>
-                <button type="submit" class="btn btn-danger" form="delete-image-<?= (int) $image['id'] ?>" onclick="return confirm('Удалить изображение?');">Удалить</button>
+                <button type="submit" class="btn btn-danger" form="delete-image-<?= (int) $image['id'] ?>" onclick="return confirm('Удалить изображение? Если оно вставлено в текст, картинка в статье тоже пропадёт.');">Удалить</button>
               </div>
             </div>
           <?php endforeach; ?>
@@ -176,8 +181,12 @@ admin_render_start($pageTitle, 'articles');
 
       <label>
         Прикрепить изображения
-        <input type="file" name="images[]" accept="image/jpeg,image/png,image/webp,image/gif" multiple />
+        <input id="article-images" type="file" name="images[]" accept="image/jpeg,image/png,image/webp,image/gif,image/*" multiple />
       </label>
+      <div class="admin-actions" style="margin-top:-4px">
+        <button type="button" class="btn btn-secondary" id="add-more-images">Добавить ещё файлы</button>
+      </div>
+      <ul id="image-file-list" class="admin-file-list" hidden></ul>
     </div>
 
     <div class="admin-actions">
@@ -204,6 +213,47 @@ admin_render_start($pageTitle, 'articles');
     return;
   }
 
+  const replaceSelection = (text, selectFrom, selectTo) => {
+    const start = textarea.selectionStart ?? textarea.value.length;
+    const end = textarea.selectionEnd ?? start;
+    const before = textarea.value.slice(0, start);
+    const after = textarea.value.slice(end);
+    textarea.value = before + text + after;
+    textarea.focus();
+    textarea.setSelectionRange(before.length + selectFrom, before.length + selectTo);
+  };
+
+  document.getElementById("format-bold")?.addEventListener("click", () => {
+    const start = textarea.selectionStart ?? 0;
+    const end = textarea.selectionEnd ?? start;
+    const selected = textarea.value.slice(start, end);
+    const inner = selected || "жирный текст";
+    const text = "**" + inner + "**";
+    replaceSelection(text, 2, 2 + inner.length);
+  });
+
+  document.getElementById("format-heading")?.addEventListener("click", () => {
+    const start = textarea.selectionStart ?? 0;
+    const end = textarea.selectionEnd ?? start;
+    const selected = textarea.value.slice(start, end).replace(/\n/g, " ").trim();
+    const title = selected || "Заголовок";
+    const before = textarea.value.slice(0, start);
+    const prefix = before && !before.endsWith("\n") ? "\n" : "";
+    const text = prefix + "## " + title + "\n";
+    replaceSelection(text, prefix.length + 3, prefix.length + 3 + title.length);
+  });
+
+  const insertTable = document.getElementById("insert-table");
+  if (insertTable) {
+    insertTable.addEventListener("click", () => {
+      const sample = "| Колонка 1 | Колонка 2 |\n| Значение 1 | Значение 2 |\n| Значение 3 | Значение 4 |\n";
+      const start = textarea.selectionStart ?? textarea.value.length;
+      const before = textarea.value.slice(0, start);
+      const prefix = before && !before.endsWith("\n") ? "\n" : "";
+      replaceSelection(prefix + sample, (prefix + sample).length, (prefix + sample).length);
+    });
+  }
+
   document.querySelectorAll(".js-insert-image").forEach((button) => {
     button.addEventListener("click", () => {
       const src = button.getAttribute("data-src") || "";
@@ -221,6 +271,60 @@ admin_render_start($pageTitle, 'articles');
       textarea.setSelectionRange(cursor, cursor);
     });
   });
+
+  const imageInput = document.getElementById("article-images");
+  const imageList = document.getElementById("image-file-list");
+  const addMoreImages = document.getElementById("add-more-images");
+  if (imageInput && imageList && typeof DataTransfer !== "undefined") {
+    const imageBag = new DataTransfer();
+
+    const fileKey = (file) => file.name + ":" + file.size + ":" + file.lastModified;
+
+    const syncImageFiles = () => {
+      imageInput.files = imageBag.files;
+      imageList.innerHTML = "";
+      imageList.hidden = imageBag.files.length === 0;
+      [...imageBag.files].forEach((file, index) => {
+        const item = document.createElement("li");
+        const name = document.createElement("span");
+        name.textContent = file.name;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.textContent = "убрать";
+        remove.addEventListener("click", () => {
+          imageBag.items.remove(index);
+          syncImageFiles();
+        });
+        item.append(name, remove);
+        imageList.appendChild(item);
+      });
+    };
+
+    const addFiles = (files) => {
+      const seen = new Set([...imageBag.files].map(fileKey));
+      for (const file of files) {
+        if (seen.has(fileKey(file))) {
+          continue;
+        }
+        imageBag.items.add(file);
+        seen.add(fileKey(file));
+      }
+      syncImageFiles();
+    };
+
+    imageInput.addEventListener("change", () => {
+      addFiles(imageInput.files);
+    });
+
+    addMoreImages?.addEventListener("click", () => {
+      const picker = document.createElement("input");
+      picker.type = "file";
+      picker.accept = imageInput.accept;
+      picker.multiple = true;
+      picker.addEventListener("change", () => addFiles(picker.files));
+      picker.click();
+    });
+  }
 })();
 </script>
 <?php
