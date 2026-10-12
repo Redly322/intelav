@@ -17,7 +17,7 @@ function admin_render_start(string $title, string $active = ''): void
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
   <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?> — Админка ИнтелАв</title>
-  <link rel="stylesheet" href="/admin/assets/admin.css?v=4" />
+  <link rel="stylesheet" href="/admin/assets/admin.css?v=5" />
 </head>
 <body class="admin-body">
   <div class="admin-shell">

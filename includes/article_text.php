@@ -134,26 +134,121 @@ function article_inline_image_preview_url(string $src): string
     return '/' . ltrim($src, '/');
 }
 
-function article_inline_image_entries(string $text): array
+function article_normalize_image_src(string $src): string
 {
-    $plain = article_edit_plain($text);
-    if (!preg_match_all('/\[картинка:\s*(.+?)\]/u', $plain, $matches, PREG_SET_ORDER)) {
+    $src = trim(html_entity_decode($src, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+    $src = str_replace('\\', '/', $src);
+
+    return ltrim($src, '/');
+}
+
+function article_image_src_variants(string $src): array
+{
+    $normalized = article_normalize_image_src($src);
+    if ($normalized === '') {
         return [];
     }
 
+    return array_values(array_unique([
+        $src,
+        $normalized,
+        '/' . $normalized,
+    ]));
+}
+
+function article_extract_html_src(string $html): string
+{
+    if (!preg_match('/\bsrc\s*=\s*(?:"([^"]+)"|\'([^\']+)\'|([^\s>]+))/i', $html, $match)) {
+        return '';
+    }
+
+    $src = $match[1] ?? '';
+    if ($src === '') {
+        $src = $match[2] ?? '';
+    }
+    if ($src === '') {
+        $src = $match[3] ?? '';
+    }
+
+    return trim(html_entity_decode($src, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+}
+
+function article_inline_image_entries(string $text): array
+{
     $items = [];
-    foreach ($matches as $index => $match) {
-        $parts = array_map('trim', explode('|', $match[1], 2));
-        $src = $parts[0];
-        if ($src === '') {
-            continue;
+    $seen = [];
+
+    $add = static function (string $src, string $caption) use (&$items, &$seen): void {
+        $src = trim($src);
+        $key = article_normalize_image_src($src);
+        if ($src === '' || $key === '' || isset($seen[$key])) {
+            return;
         }
+        if (preg_match('#^(javascript|data|vbscript):#i', $src) === 1) {
+            return;
+        }
+        $seen[$key] = true;
         $items[] = [
-            'index' => $index,
+            'index' => count($items),
             'src' => $src,
             'url' => article_inline_image_preview_url($src),
-            'caption' => $parts[1] ?? '',
+            'caption' => trim($caption),
         ];
+    };
+
+    if (preg_match_all('#<figure\b[^>]*>.*?</figure>#is', $text, $figures)) {
+        foreach ($figures[0] as $figure) {
+            $src = article_extract_html_src($figure);
+            if ($src === '') {
+                continue;
+            }
+            $caption = '';
+            if (preg_match('#<figcaption\b[^>]*>(.*?)</figcaption>#is', $figure, $captionMatch)) {
+                $caption = trim(html_entity_decode(strip_tags($captionMatch[1]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            }
+            $add($src, $caption);
+        }
+    }
+
+    if (preg_match_all('#<img\b[^>]*>#i', $text, $images)) {
+        foreach ($images[0] as $image) {
+            $src = article_extract_html_src($image);
+            $caption = '';
+            if (preg_match('/\balt\s*=\s*(?:"([^"]*)"|\'([^\']*)\')/i', $image, $altMatch)) {
+                $alt = ($altMatch[1] ?? '') !== '' ? $altMatch[1] : ($altMatch[2] ?? '');
+                $caption = trim(html_entity_decode($alt, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            }
+            $add($src, $caption);
+        }
+    }
+
+    $scanTexts = [$text];
+    if (article_looks_like_html($text)) {
+        $scanTexts[] = article_html_to_plain($text);
+    }
+    foreach ($scanTexts as $scanText) {
+        if (preg_match_all('/\[([^\[\]]+)\]/', $scanText, $bracketMatches, PREG_SET_ORDER)) {
+            foreach ($bracketMatches as $match) {
+                $payload = $match[1];
+                if (
+                    !str_contains($payload, 'assets/images/')
+                    && !str_contains($payload, 'uploads/articles/')
+                    && !str_contains($payload, 'картинка:')
+                ) {
+                    continue;
+                }
+                if (str_contains($payload, ':')) {
+                    $payload = trim((string) substr($payload, (int) strpos($payload, ':') + 1));
+                }
+                $parts = array_map('trim', explode('|', $payload, 2));
+                $add($parts[0], $parts[1] ?? '');
+            }
+        }
+        if (preg_match_all('#(?:/?assets/images/|/?uploads/articles/)[A-Za-z0-9._/-]+\.(?:jpe?g|png|webp|gif)#i', $scanText, $pathMatches)) {
+            foreach ($pathMatches[0] as $src) {
+                $add(str_replace(' ', '', $src), '');
+            }
+        }
     }
 
     return $items;
@@ -161,37 +256,51 @@ function article_inline_image_entries(string $text): array
 
 function article_remove_inline_image(string $text, string $src): string
 {
-    $src = trim($src);
-    if ($src === '') {
+    $variants = article_image_src_variants($src);
+    if ($variants === []) {
         return $text;
     }
 
     if (article_looks_like_html($text)) {
-        $quoted = preg_quote($src, '/');
-        $html = preg_replace(
-            '#<figure\b[^>]*>.*?<img\b[^>]*\bsrc\s*=\s*["\']' . $quoted . '["\'][^>]*>.*?</figure>#is',
-            '',
-            $text,
-            1
-        ) ?? $text;
-        if ($html === $text) {
-            $html = preg_replace(
+        $html = $text;
+        foreach ($variants as $variant) {
+            $quoted = preg_quote($variant, '/');
+            $next = preg_replace(
+                '#<figure\b[^>]*>.*?<img\b[^>]*\bsrc\s*=\s*["\']' . $quoted . '["\'][^>]*>.*?</figure>#is',
+                '',
+                $html,
+                1
+            ) ?? $html;
+            if ($next !== $html) {
+                return trim($next);
+            }
+            $next = preg_replace(
                 '#<img\b[^>]*\bsrc\s*=\s*["\']' . $quoted . '["\'][^>]*>#i',
                 '',
-                $text,
+                $html,
                 1
-            ) ?? $text;
+            ) ?? $html;
+            if ($next !== $html) {
+                return trim($next);
+            }
         }
 
         return trim($html);
     }
 
-    $plain = preg_replace(
-        '/\n*\[картинка:\s*' . preg_quote($src, '/') . '(?:\s*\|[^\]]*)?\]\s*/u',
-        "\n\n",
-        $text,
-        1
-    ) ?? $text;
+    $plain = $text;
+    foreach ($variants as $variant) {
+        $next = preg_replace(
+            '/\n*\[картинка:\s*' . preg_quote($variant, '/') . '(?:\s*\|[^\]]*)?\]\s*/u',
+            "\n\n",
+            $plain,
+            1
+        ) ?? $plain;
+        if ($next !== $plain) {
+            $plain = $next;
+            break;
+        }
+    }
 
     return trim((string) preg_replace("/\n{3,}/", "\n\n", $plain));
 }

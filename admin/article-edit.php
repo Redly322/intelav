@@ -177,15 +177,16 @@ admin_render_start($pageTitle, 'articles');
       <p class="admin-muted">JPG, PNG, WEBP или GIF, до 10 МБ каждый. Можно прикрепить несколько файлов сразу или добавлять ещё кнопкой ниже. Чтобы поставить фото в нужное место, нажмите «Вставить в текст». Картинки из текста статьи (в том числе верхний скриншот) можно убрать кнопкой «Удалить».</p>
 
       <?php if ($inlineImages !== []): ?>
-        <p class="admin-muted">В тексте статьи</p>
+        <p class="admin-muted">В тексте статьи: <?= count($inlineImages) ?></p>
         <div class="admin-image-grid">
           <?php foreach ($inlineImages as $index => $inline): ?>
             <div class="admin-image-card">
-              <a href="<?= htmlspecialchars($inline['url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener">
-                <img src="<?= htmlspecialchars($inline['url'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($inline['caption'] !== '' ? $inline['caption'] : 'изображение в тексте', ENT_QUOTES, 'UTF-8') ?>" />
+              <a href="<?= htmlspecialchars($inline['url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" target="_blank" rel="noopener">
+                <img src="<?= htmlspecialchars($inline['url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" alt="<?= htmlspecialchars($inline['caption'] !== '' ? $inline['caption'] : 'изображение в тексте', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" />
               </a>
+              <p class="admin-image-src"><?= htmlspecialchars($inline['src'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></p>
               <?php if ($inline['caption'] !== ''): ?>
-                <p class="admin-muted"><?= htmlspecialchars($inline['caption'], ENT_QUOTES, 'UTF-8') ?></p>
+                <p class="admin-muted"><?= htmlspecialchars($inline['caption'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></p>
               <?php endif; ?>
               <div class="admin-actions">
                 <button type="submit" class="btn btn-danger" form="remove-inline-image-<?= $index ?>" onclick="return confirm('Убрать это изображение из текста статьи?');">Удалить</button>
@@ -196,30 +197,33 @@ admin_render_start($pageTitle, 'articles');
       <?php endif; ?>
 
       <?php if ($images !== []): ?>
+        <p class="admin-muted">Прикреплённые файлы: <?= count($images) ?></p>
         <div class="admin-image-grid">
           <?php foreach ($images as $image): ?>
             <div class="admin-image-card">
-              <a href="<?= htmlspecialchars($image['url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener">
-                <img src="<?= htmlspecialchars($image['url'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($image['original_name'], ENT_QUOTES, 'UTF-8') ?>" />
+              <a href="<?= htmlspecialchars($image['url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" target="_blank" rel="noopener">
+                <img src="<?= htmlspecialchars($image['url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" alt="<?= htmlspecialchars($image['original_name'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" />
               </a>
               <label>
                 Подпись
-                <input type="text" name="captions[<?= (int) $image['id'] ?>]" value="<?= htmlspecialchars($image['caption'], ENT_QUOTES, 'UTF-8') ?>" placeholder="Подпись под картинкой" />
+                <input type="text" name="captions[<?= (int) $image['id'] ?>]" value="<?= htmlspecialchars($image['caption'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" placeholder="Подпись под картинкой" />
               </label>
               <div class="admin-actions">
                 <button
                   type="button"
                   class="btn btn-secondary js-insert-image"
-                  data-src="<?= htmlspecialchars($image['url'], ENT_QUOTES, 'UTF-8') ?>"
-                  data-caption="<?= htmlspecialchars($image['caption'], ENT_QUOTES, 'UTF-8') ?>"
-                  data-alt="<?= htmlspecialchars($image['caption'] !== '' ? $image['caption'] : $image['original_name'], ENT_QUOTES, 'UTF-8') ?>"
+                  data-src="<?= htmlspecialchars($image['url'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
+                  data-caption="<?= htmlspecialchars($image['caption'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
+                  data-alt="<?= htmlspecialchars($image['caption'] !== '' ? $image['caption'] : $image['original_name'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"
                 >Вставить в текст</button>
                 <button type="submit" class="btn btn-danger" form="delete-image-<?= (int) $image['id'] ?>" onclick="return confirm('Удалить изображение? Если оно вставлено в текст, картинка в статье тоже пропадёт.');">Удалить</button>
               </div>
             </div>
           <?php endforeach; ?>
         </div>
-      <?php elseif ($article && $inlineImages === []): ?>
+      <?php endif; ?>
+
+      <?php if ($article && $inlineImages === [] && $images === []): ?>
         <p class="admin-muted">К статье пока ничего не прикреплено.</p>
       <?php endif; ?>
 
@@ -246,7 +250,7 @@ admin_render_start($pageTitle, 'articles');
     <form id="remove-inline-image-<?= $index ?>" method="post" hidden>
       <?php admin_csrf_field(); ?>
       <input type="hidden" name="action" value="remove_inline_image" />
-      <input type="hidden" name="image_src" value="<?= htmlspecialchars($inline['src'], ENT_QUOTES, 'UTF-8') ?>" />
+      <input type="hidden" name="image_src" value="<?= htmlspecialchars($inline['src'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>" />
     </form>
   <?php endforeach; ?>
 
