@@ -39,6 +39,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        if ($action === 'remove_inline_image') {
+            if ($article === null) {
+                throw new InvalidArgumentException('Сначала сохраните статью.');
+            }
+            $src = trim((string) ($_POST['image_src'] ?? ''));
+            $known = array_column(article_inline_image_entries((string) $article['text']), 'src');
+            if ($src === '' || !in_array($src, $known, true)) {
+                throw new InvalidArgumentException('Изображение в тексте не найдено.');
+            }
+            $text = article_remove_inline_image((string) $article['text'], $src);
+            update_article(
+                $id,
+                (string) $article['link'],
+                (string) $article['description'],
+                (string) $article['author'],
+                (string) $article['published_at'],
+                $text,
+                $article['category_id'] !== null ? (int) $article['category_id'] : null
+            );
+            flash_set('success', 'Скриншот убран из статьи.');
+            header('Location: /admin/article-edit.php?id=' . $id);
+            exit;
+        }
+
         $description = trim((string) ($_POST['description'] ?? ''));
         $author = trim((string) ($_POST['author'] ?? ''));
         $publishedAt = trim((string) ($_POST['published_at'] ?? ''));
@@ -94,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $categories = fetch_all_categories();
 $images = $article ? fetch_article_images((int) $article['id']) : [];
+$inlineImages = $article ? article_inline_image_entries((string) $article['text']) : [];
 $pageTitle = $article ? 'Редактировать статью' : 'Новая статья';
 
 admin_render_start($pageTitle, 'articles');
@@ -149,7 +174,26 @@ admin_render_start($pageTitle, 'articles');
 
     <div class="admin-images">
       <h2>Изображения</h2>
-      <p class="admin-muted">JPG, PNG, WEBP или GIF, до 10 МБ каждый. Можно прикрепить несколько файлов сразу или добавлять ещё кнопкой ниже. Чтобы поставить фото в нужное место, нажмите «Вставить в текст».</p>
+      <p class="admin-muted">JPG, PNG, WEBP или GIF, до 10 МБ каждый. Можно прикрепить несколько файлов сразу или добавлять ещё кнопкой ниже. Чтобы поставить фото в нужное место, нажмите «Вставить в текст». Картинки из текста статьи (в том числе верхний скриншот) можно убрать кнопкой «Удалить».</p>
+
+      <?php if ($inlineImages !== []): ?>
+        <p class="admin-muted">В тексте статьи</p>
+        <div class="admin-image-grid">
+          <?php foreach ($inlineImages as $index => $inline): ?>
+            <div class="admin-image-card">
+              <a href="<?= htmlspecialchars($inline['url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener">
+                <img src="<?= htmlspecialchars($inline['url'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($inline['caption'] !== '' ? $inline['caption'] : 'изображение в тексте', ENT_QUOTES, 'UTF-8') ?>" />
+              </a>
+              <?php if ($inline['caption'] !== ''): ?>
+                <p class="admin-muted"><?= htmlspecialchars($inline['caption'], ENT_QUOTES, 'UTF-8') ?></p>
+              <?php endif; ?>
+              <div class="admin-actions">
+                <button type="submit" class="btn btn-danger" form="remove-inline-image-<?= $index ?>" onclick="return confirm('Убрать это изображение из текста статьи?');">Удалить</button>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
 
       <?php if ($images !== []): ?>
         <div class="admin-image-grid">
@@ -175,7 +219,7 @@ admin_render_start($pageTitle, 'articles');
             </div>
           <?php endforeach; ?>
         </div>
-      <?php elseif ($article): ?>
+      <?php elseif ($article && $inlineImages === []): ?>
         <p class="admin-muted">К статье пока ничего не прикреплено.</p>
       <?php endif; ?>
 
@@ -197,6 +241,14 @@ admin_render_start($pageTitle, 'articles');
       <?php endif; ?>
     </div>
   </form>
+
+  <?php foreach ($inlineImages as $index => $inline): ?>
+    <form id="remove-inline-image-<?= $index ?>" method="post" hidden>
+      <?php admin_csrf_field(); ?>
+      <input type="hidden" name="action" value="remove_inline_image" />
+      <input type="hidden" name="image_src" value="<?= htmlspecialchars($inline['src'], ENT_QUOTES, 'UTF-8') ?>" />
+    </form>
+  <?php endforeach; ?>
 
   <?php foreach ($images as $image): ?>
     <form id="delete-image-<?= (int) $image['id'] ?>" method="post" hidden>

@@ -125,6 +125,77 @@ function article_html_to_plain(string $html): string
     return trim($text);
 }
 
+function article_inline_image_preview_url(string $src): string
+{
+    if (preg_match('#^https?://#i', $src) === 1) {
+        return $src;
+    }
+
+    return '/' . ltrim($src, '/');
+}
+
+function article_inline_image_entries(string $text): array
+{
+    $plain = article_edit_plain($text);
+    if (!preg_match_all('/\[картинка:\s*(.+?)\]/u', $plain, $matches, PREG_SET_ORDER)) {
+        return [];
+    }
+
+    $items = [];
+    foreach ($matches as $index => $match) {
+        $parts = array_map('trim', explode('|', $match[1], 2));
+        $src = $parts[0];
+        if ($src === '') {
+            continue;
+        }
+        $items[] = [
+            'index' => $index,
+            'src' => $src,
+            'url' => article_inline_image_preview_url($src),
+            'caption' => $parts[1] ?? '',
+        ];
+    }
+
+    return $items;
+}
+
+function article_remove_inline_image(string $text, string $src): string
+{
+    $src = trim($src);
+    if ($src === '') {
+        return $text;
+    }
+
+    if (article_looks_like_html($text)) {
+        $quoted = preg_quote($src, '/');
+        $html = preg_replace(
+            '#<figure\b[^>]*>.*?<img\b[^>]*\bsrc\s*=\s*["\']' . $quoted . '["\'][^>]*>.*?</figure>#is',
+            '',
+            $text,
+            1
+        ) ?? $text;
+        if ($html === $text) {
+            $html = preg_replace(
+                '#<img\b[^>]*\bsrc\s*=\s*["\']' . $quoted . '["\'][^>]*>#i',
+                '',
+                $text,
+                1
+            ) ?? $text;
+        }
+
+        return trim($html);
+    }
+
+    $plain = preg_replace(
+        '/\n*\[картинка:\s*' . preg_quote($src, '/') . '(?:\s*\|[^\]]*)?\]\s*/u',
+        "\n\n",
+        $text,
+        1
+    ) ?? $text;
+
+    return trim((string) preg_replace("/\n{3,}/", "\n\n", $plain));
+}
+
 function article_html_image_to_placeholder(string $html): string
 {
     if (!preg_match('/\bsrc\s*=\s*["\']([^"\']+)["\']/i', $html, $srcMatch)) {
